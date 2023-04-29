@@ -40,7 +40,7 @@ public partial class SelectPerformer : Node2D
         if (Input.IsActionJustPressed("left_gamepad1"))
 		{
             int currentIndex = _gamepad1IndexPosition == 0 ? 0 : --_gamepad1IndexPosition;
-			if (currentIndex == 0) 
+			if (currentIndex == 0)
 			{
 				//Player is already selected, play the shake animation
 				if (_gamepad2SelectedPerformer == Performers.Roulyo)
@@ -52,7 +52,7 @@ public partial class SelectPerformer : Node2D
 				}
 			} else {
                 SelectCPUForGamepad("gamepad1");
-            }			
+            }
         }
 		if (Input.IsActionJustPressed("right_gamepad1"))
 		{
@@ -105,6 +105,12 @@ public partial class SelectPerformer : Node2D
                 SelectCPUForGamepad("gamepad2");
             }
 		}
+	}
+//-----------------------------------------------------------------------------
+	public bool IsGamepadCPUBound(int gpadIdx)
+	{
+		return (gpadIdx == 1 && _gamepad1SelectedPerformer == Performers.CPU)
+			|| (gpadIdx == 2 && _gamepad2SelectedPerformer == Performers.CPU);
 	}
 //-----------------------------------------------------------------------------
 	private void SelectCPUForGamepad(string gamepad)
