@@ -10,19 +10,28 @@ VBoxContainer/constants/separation = 20
 
 [node name="BattleOrchestrator" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_il46s")
 
 [node name="DropZone" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 427.68
+layout_mode = 1
+anchor_right = 1.00087
+anchor_bottom = 0.618827
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
 theme = ExtResource("2_bjb0y")
+metadata/_edit_use_anchors_ = true
 
 [node name="IncomingPunch" type="VBoxContainer" parent="DropZone"]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 48.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 39.0
+grow_horizontal = 2
 
 [node name="Label" type="Label" parent="DropZone/IncomingPunch"]
 layout_mode = 2
@@ -31,10 +40,15 @@ theme = ExtResource("3_euh07")
 text = "                   draps"
 
 [node name="IncomingPhrase" type="VBoxContainer" parent="DropZone"]
-layout_mode = 0
-offset_top = 350.0
-offset_right = 1152.0
-offset_bottom = 398.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0026019
+anchor_top = 0.847619
+anchor_right = 1.0026
+anchor_bottom = 0.940476
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="DropZone/IncomingPhrase"]
 layout_mode = 2
@@ -42,20 +56,26 @@ size_flags_horizontal = 4
 theme = ExtResource("3_euh07")
 text = "Te cacher sous tes        "
 
-[node name="HSeparator" type="HSeparator" parent="."]
-layout_mode = 0
-offset_left = 85.0
-offset_top = 409.0
-offset_right = 1079.0
-offset_bottom = 413.0
+[node name="HSeparator" type="HSeparator" parent="DropZone"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="Verse" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 57.0
-offset_top = 428.0
-offset_right = 1092.0
-offset_bottom = 647.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.666667
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 theme = SubResource("Theme_m6vvn")
+metadata/_edit_use_anchors_ = true
 
 [node name="0" type="Label" parent="Verse"]
 layout_mode = 2
