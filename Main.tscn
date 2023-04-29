@@ -108,13 +108,14 @@ texture = ExtResource("2_w51pf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Roulyo/AnimatableBody2D"]
 shape = SubResource("RectangleShape2D_2glp4")
 
-[node name="BattleOrchestrator" parent="HUD" instance=ExtResource("3_dew1n")]
+[node name="BattleOrchestrator" parent="HUD" instance=ExtResource("5_xlc77")]
 visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.264757
-anchor_right = 0.807292
-metadata/_edit_use_anchors_ = true
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -263.0
+offset_right = 343.0
 
 [node name="Samoussa" type="Sprite2D" parent="HUD"]
 modulate = Color(0.517647, 0.0235294, 0.666667, 1)
@@ -206,7 +207,6 @@ libraries = {
 }
 
 [connection signal="CountdownReachedZero" from="HUD" to="HUD/BattleOrchestrator" method="OnCountdownReachedZero"]
-
 [connection signal="timeout" from="HUD/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
 [connection signal="Gamepad1PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad1PerformerSelected"]
 [connection signal="Gamepad2PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad2PerformerSelected"]
