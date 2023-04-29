@@ -25,26 +25,36 @@ offset_bottom = 26.0
 grow_horizontal = 2
 text = "Game Title"
 
-[node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("1_dhaps")
-
-[node name="Roulyo" type="Sprite2D" parent="Node2D"]
+[node name="Roulyo" type="Sprite2D" parent="GUI"]
 modulate = Color(0, 0.623529, 0.552941, 1)
 position = Vector2(232, 336)
 texture = ExtResource("1_dkpgv")
 
-[node name="Samoussa" type="Sprite2D" parent="Node2D"]
+[node name="Samoussa" type="Sprite2D" parent="GUI"]
 modulate = Color(0.517647, 0.0235294, 0.666667, 1)
 position = Vector2(1003, 343)
 texture = ExtResource("1_dkpgv")
 
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("1_dhaps")
+
 [node name="Player1" type="Sprite2D" parent="Node2D"]
-position = Vector2(596, 257)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_3qm52")
 
 [node name="Player2" type="Sprite2D" parent="Node2D"]
 modulate = Color(0.207843, 0.866667, 1, 1)
-position = Vector2(591, 384)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_3qm52")
+
+[node name="Roulyo" type="Marker2D" parent="Node2D" groups=["Player1Position", "Player2Position"]]
+position = Vector2(218, 351)
+
+[node name="P1Unselected" type="Marker2D" parent="Node2D" groups=["Player1Position"]]
+position = Vector2(593, 254)
+
+[node name="P2Unselected" type="Marker2D" parent="Node2D" groups=["Player2Position"]]
+position = Vector2(590, 395)
+
+[node name="Samoussa" type="Marker2D" parent="Node2D" groups=["Player1Position", "Player2Position"]]
+position = Vector2(990, 360)
