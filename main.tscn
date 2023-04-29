@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bydtpscpaxxgm"]
+[gd_scene load_steps=11 format=3 uid="uid://bydtpscpaxxgm"]
 
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="1_dhaps"]
 [ext_resource type="Texture2D" uid="uid://cb0j5x6atcj48" path="res://assets/icon.svg" id="1_dkpgv"]
@@ -10,6 +10,70 @@ size = Vector2(128, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h60i4"]
 size = Vector2(128, 128)
+
+[sub_resource type="Animation" id="Animation_gc5e4"]
+resource_name = "shake_gamepad1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PerformerSelection/Gamepad1:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_82ua5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PerformerSelection/Gamepad1:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PerformerSelection/Gamepad2:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3pv38"]
+resource_name = "shake_gamepad2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PerformerSelection/Gamepad2:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c534j"]
+_data = {
+"RESET": SubResource("Animation_82ua5"),
+"shake_gamepad1": SubResource("Animation_gc5e4"),
+"shake_gamepad2": SubResource("Animation_3pv38")
+}
 
 [node name="MainNode" type="Node"]
 
@@ -85,30 +149,54 @@ offset_bottom = 26.0
 grow_horizontal = 0
 text = "Gamepad2 will play: CPU"
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Countdown" type="Label" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -13.0
+offset_right = 20.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+
+[node name="CountdownToStart" type="Timer" parent="HUD"]
+
+[node name="PerformerSelection" type="Node2D" parent="."]
 script = ExtResource("1_dhaps")
 
-[node name="Gamepad1" type="Sprite2D" parent="Node2D"]
-scale = Vector2(0.25, 0.25)
+[node name="Gamepad1" type="Sprite2D" parent="PerformerSelection"]
+scale = Vector2(0.240745, 0.25)
 texture = ExtResource("2_3qm52")
 
-[node name="Gamepad2" type="Sprite2D" parent="Node2D"]
+[node name="Gamepad2" type="Sprite2D" parent="PerformerSelection"]
 modulate = Color(0.207843, 0.866667, 1, 1)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_3qm52")
 
-[node name="Roulyo" type="Marker2D" parent="Node2D" groups=["Gamepad1Position", "Gamepad2Position"]]
+[node name="Roulyo" type="Marker2D" parent="PerformerSelection" groups=["Gamepad1Position", "Gamepad2Position"]]
 position = Vector2(218, 351)
 
-[node name="P1Unselected" type="Marker2D" parent="Node2D" groups=["Gamepad1Position"]]
+[node name="P1Unselected" type="Marker2D" parent="PerformerSelection" groups=["Gamepad1Position"]]
 position = Vector2(593, 254)
 
-[node name="P2Unselected" type="Marker2D" parent="Node2D" groups=["Gamepad2Position"]]
+[node name="P2Unselected" type="Marker2D" parent="PerformerSelection" groups=["Gamepad2Position"]]
 position = Vector2(590, 395)
 
-[node name="Samoussa" type="Marker2D" parent="Node2D" groups=["Gamepad1Position", "Gamepad2Position"]]
+[node name="Samoussa" type="Marker2D" parent="PerformerSelection" groups=["Gamepad1Position", "Gamepad2Position"]]
 position = Vector2(990, 360)
 
-[connection signal="Gamepad1PerformerSelected" from="Node2D" to="HUD" method="OnGamepad1PerformerSelected"]
-[connection signal="Gamepad2PerformerSelected" from="Node2D" to="HUD" method="OnGamepad2PerformerSelected"]
-[connection signal="IsGameReadyToPlay" from="Node2D" to="HUD" method="OnIsGameReadyToPlay"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_c534j")
+}
+
+[connection signal="timeout" from="HUD/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
+[connection signal="Gamepad1PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad1PerformerSelected"]
+[connection signal="Gamepad2PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad2PerformerSelected"]
+[connection signal="IsGameReadyToPlay" from="PerformerSelection" to="HUD" method="OnIsGameReadyToPlay"]

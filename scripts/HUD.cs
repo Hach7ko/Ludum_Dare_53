@@ -2,6 +2,29 @@ using Godot;
 
 public partial class HUD : Control
 {
+    private bool _isGameReadyToPlay = false;
+    private int  _countdown = 3;
+    public override void _Input(InputEvent inputEvent)
+    {
+        if (inputEvent.IsActionPressed("confirm") && _isGameReadyToPlay)
+        {
+            GetNode<Label>("Countdown").Show();
+            GetNode<Timer>("CountdownToStart").Start();
+            GetNode<Node2D>("../PerformerSelection").Hide();
+        }
+    }
+//-----------------------------------------------------------------------------
+    public void OnCountdownToStartTimeout()
+    {
+        --_countdown;
+        GetNode<Label>("Countdown").Text = _countdown.ToString();
+        if (_countdown == 0)
+        {
+            GetNode<Timer>("CountdownToStart").Stop();
+            GetNode<Label>("Countdown").Hide();
+        }
+    }
+//-----------------------------------------------------------------------------
 	private void OnGamepad1PerformerSelected(string performer)
     {
         GetNode<Label>("Gamepad1Peformer").Text = "Gamepad1 will play:" + performer;
@@ -14,7 +37,8 @@ public partial class HUD : Control
 //-----------------------------------------------------------------------------
     private void OnIsGameReadyToPlay(bool isGameReadyToPlay)
     {
-        if(isGameReadyToPlay)
+        _isGameReadyToPlay = isGameReadyToPlay;
+        if (_isGameReadyToPlay)
         {
             GetNode<Label>("PressToStart").Show();
         } else
