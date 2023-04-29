@@ -6,6 +6,8 @@ public partial class SelectPerformer : Node2D
     public delegate void Gamepad1PerformerSelectedEventHandler(string performer);
 	[Signal]
     public delegate void Gamepad2PerformerSelectedEventHandler(string performer);
+	[Signal]
+    public delegate void IsGameReadyToPlayEventHandler(bool isGameReadyToPlay);
 	enum Performers : int
     {
         Roulyo = 0,
@@ -96,18 +98,31 @@ public partial class SelectPerformer : Node2D
 			_gamepad2.Position = (_gamepad2Positions[(int)Performers.CPU] as Marker2D).Position;
 			OnGamepad2PerformerSelected(Performers.CPU);
 		}
-
+		OnIsGameReadyToPlay();
 	}
 //-----------------------------------------------------------------------------
 	private void OnGamepad1PerformerSelected(Performers performer)
 	{
         _gamepad1SelectedPerformer = performer;
         EmitSignal(nameof(Gamepad1PerformerSelected), performer.ToString());
+		OnIsGameReadyToPlay();
     }
 //-----------------------------------------------------------------------------
 	private void OnGamepad2PerformerSelected(Performers performer)
 	{
 		_gamepad2SelectedPerformer = performer;
         EmitSignal(nameof(Gamepad2PerformerSelected), performer.ToString());
-	}
+        OnIsGameReadyToPlay();
+    }
+//-----------------------------------------------------------------------------
+    private void OnIsGameReadyToPlay()
+    {
+        if(_gamepad1SelectedPerformer != Performers.CPU || _gamepad2SelectedPerformer != Performers.CPU)
+		{
+            EmitSignal(nameof(IsGameReadyToPlay), true);
+        } else
+		{
+			EmitSignal(nameof(IsGameReadyToPlay), false);
+		}
+    }
 }

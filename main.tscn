@@ -54,6 +54,7 @@ texture = ExtResource("1_dkpgv")
 shape = SubResource("RectangleShape2D_h60i4")
 
 [node name="PressToStart" type="Label" parent="HUD"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -110,3 +111,4 @@ position = Vector2(990, 360)
 
 [connection signal="Gamepad1PerformerSelected" from="Node2D" to="HUD" method="OnGamepad1PerformerSelected"]
 [connection signal="Gamepad2PerformerSelected" from="Node2D" to="HUD" method="OnGamepad2PerformerSelected"]
+[connection signal="IsGameReadyToPlay" from="Node2D" to="HUD" method="OnIsGameReadyToPlay"]

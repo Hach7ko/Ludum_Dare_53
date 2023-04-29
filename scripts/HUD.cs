@@ -12,4 +12,14 @@ public partial class HUD : Control
         GetNode<Label>("Gamepad2Peformer").Text = "Gamepad2 will play:" + performer;
     }
 //-----------------------------------------------------------------------------
+    private void OnIsGameReadyToPlay(bool isGameReadyToPlay)
+    {
+        if(isGameReadyToPlay)
+        {
+            GetNode<Label>("PressToStart").Show();
+        } else
+        {
+            GetNode<Label>("PressToStart").Hide();
+        }
+    }
 }
