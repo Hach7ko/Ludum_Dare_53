@@ -1,0 +1,78 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2xcgudpkyw5i"]
+
+[ext_resource type="Script" path="res://scripts/BattleOrchestrator.cs" id="1_il46s"]
+[ext_resource type="Theme" uid="uid://dkda5wmy5pmwj" path="res://assets/LabelContainerTheme.tres" id="2_bjb0y"]
+[ext_resource type="Theme" uid="uid://dfssr6q3mq1d7" path="res://assets/LyricsLabelTheme.tres" id="3_euh07"]
+
+[sub_resource type="Theme" id="Theme_m6vvn"]
+PanelContainer/styles/panel = null
+VBoxContainer/constants/separation = 20
+
+[node name="BattleOrchestrator" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_il46s")
+
+[node name="DropZone" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 427.68
+theme = ExtResource("2_bjb0y")
+
+[node name="IncomingPunch" type="VBoxContainer" parent="DropZone"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 48.0
+
+[node name="Label" type="Label" parent="DropZone/IncomingPunch"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_euh07")
+text = "                   draps"
+
+[node name="IncomingPhrase" type="VBoxContainer" parent="DropZone"]
+layout_mode = 0
+offset_top = 350.0
+offset_right = 1152.0
+offset_bottom = 398.0
+
+[node name="Label" type="Label" parent="DropZone/IncomingPhrase"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_euh07")
+text = "Te cacher sous tes        "
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 409.0
+offset_right = 1079.0
+offset_bottom = 413.0
+
+[node name="Verse" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 428.0
+offset_right = 1092.0
+offset_bottom = 647.0
+theme = SubResource("Theme_m6vvn")
+
+[node name="0" type="Label" parent="Verse"]
+layout_mode = 2
+theme = ExtResource("3_euh07")
+text = "Premier vers, j'te déboite"
+
+[node name="1" type="Label" parent="Verse"]
+layout_mode = 2
+theme = ExtResource("3_euh07")
+text = "Tu trembles déjà"
+
+[node name="2" type="Label" parent="Verse"]
+layout_mode = 2
+theme = ExtResource("3_euh07")
+text = "T'as plus qu'à rentrer chez oit"
+
+[node name="3" type="Label" parent="Verse"]
+layout_mode = 2
+theme = ExtResource("3_euh07")
+text = "..."

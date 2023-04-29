@@ -1,45 +1,33 @@
 using Godot;
 using System;
 
-public class WeightedWord
+public partial class Performer
 {
-    public string Word {get; set; }
-    public uint Weight { get; set; }
-}
+    protected Track _track = null;
+    private int _currentVerse = 0;
+    private int _currentLine = 0;
 
-public class Line
-{
-    public string Phrase { get; set; }
-    public WeightedWord[] Punches { get; set; }
-}
-
-public class Verse
-{
-    public Line[] Lines { get; set; }
-}
-
-public class Track
-{
-    public Verse[] Verses { get; set; }
-}
-
-public partial class Performer : Node
-{
-    protected Track _track;
-    private uint _currentLine = 0;
-    private uint _currentVerse = 0;
-
-    public override void _Ready()
+    public Performer(Track track)
     {
-        _track = new Track();
+        _track = track;
     }
 
-    public Line GetNextLine()
+    public Line GetCurrentLine()
     {
         return _track.Verses[_currentVerse].Lines[_currentLine];
     }
 
-    protected void PrintTrack()
+    public void GoToNextLine()
+    {
+        _currentLine = (_currentLine + 1) % _track.Verses[_currentVerse].Lines.Length;
+
+        if (_currentLine == 0) // we looped
+        {
+            _currentVerse = (_currentVerse + 1) % _track.Verses.Length;
+        }
+    }
+
+    public void PrintTrack()
     {
         string trackStr = new string("");
 
@@ -49,7 +37,7 @@ public partial class Performer : Node
             {
                 trackStr += line.Phrase + " { ";
 
-                foreach (WeightedWord punch in line.Punches)
+                foreach (Punch punch in line.Punches)
                 {
                     trackStr += punch.Word + ":" + punch.Weight + ", ";
                 }

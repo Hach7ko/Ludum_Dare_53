@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dfssr6q3mq1d7"]
+
+[ext_resource type="FontFile" uid="uid://duyomqy4je6cl" path="res://assets/SmallTypeWriting.ttf" id="1_n2tcm"]
+
+[resource]
+Label/font_sizes/font_size = 32
+Label/fonts/font = ExtResource("1_n2tcm")
