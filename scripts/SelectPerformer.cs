@@ -37,51 +37,71 @@ public partial class SelectPerformer : Node2D
     public override void _PhysicsProcess(double delta)
 	{
         //We can add later linear interpolation to make it move smoothly
-        if(Input.IsActionJustPressed("left_gamepad1"))
+        if (Input.IsActionJustPressed("left_gamepad1"))
 		{
             int currentIndex = _gamepad1IndexPosition == 0 ? 0 : --_gamepad1IndexPosition;
-			if(currentIndex == 0 && _gamepad2SelectedPerformer != Performers.Roulyo) 
+			if (currentIndex == 0) 
 			{
-				_gamepad1.Position = (_gamepad1Positions[currentIndex] as Marker2D).Position;
-				OnGamepad1PerformerSelected(Performers.Roulyo);
-			} else
-			{
+				//Player is already selected, play the shake animation
+				if (_gamepad2SelectedPerformer == Performers.Roulyo)
+				{
+					GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad1");
+				} else if (_gamepad2SelectedPerformer != Performers.Roulyo)
+				{
+					OnGamepad1PerformerSelected(Performers.Roulyo, currentIndex);
+				}
+			} else {
                 SelectCPUForGamepad("gamepad1");
             }			
         }
-		if(Input.IsActionJustPressed("right_gamepad1"))
+		if (Input.IsActionJustPressed("right_gamepad1"))
 		{
 			int currentIndex = _gamepad1IndexPosition == _gamepad1Positions.Count - 1 ? _gamepad1Positions.Count - 1 : ++_gamepad1IndexPosition;
-			if(_gamepad1IndexPosition == _gamepad1Positions.Count - 1 && _gamepad2SelectedPerformer != Performers.Samoussa)
+			if (_gamepad1IndexPosition == _gamepad1Positions.Count - 1)
 			{
-            	_gamepad1.Position = (_gamepad1Positions[currentIndex] as Marker2D).Position;
-				OnGamepad1PerformerSelected(Performers.Samoussa);
-			} else
-			{
+				//Player is already selected, play the shake animation
+				if (_gamepad2SelectedPerformer == Performers.Samoussa)
+				{
+					GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad1");
+				} else if (_gamepad2SelectedPerformer != Performers.Samoussa)
+				{
+					OnGamepad1PerformerSelected(Performers.Samoussa, currentIndex);
+				}
+			} else {
 				SelectCPUForGamepad("gamepad1");
 			}
 		}
-		if(Input.IsActionJustPressed("left_gamepad2"))
+		if (Input.IsActionJustPressed("left_gamepad2"))
 		{
 			int currentIndex = _gamepad2IndexPosition == 0 ? 0 : --_gamepad2IndexPosition;
-			if(_gamepad2IndexPosition == 0 && _gamepad1SelectedPerformer != Performers.Roulyo)
+			if (_gamepad2IndexPosition == 0)
 			{
-				_gamepad2.Position = (_gamepad2Positions[currentIndex] as Marker2D).Position;
-				OnGamepad2PerformerSelected(Performers.Roulyo);
-			} else
-			{
+				//Player is already selected, play the shake animation
+				if (_gamepad1SelectedPerformer == Performers.Roulyo)
+				{
+					GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad2");
+				} else if (_gamepad1SelectedPerformer != Performers.Roulyo)
+				{
+					OnGamepad2PerformerSelected(Performers.Roulyo, currentIndex);
+				}
+			} else {
 				SelectCPUForGamepad("gamepad2");
 			}
 		}
-		if(Input.IsActionJustPressed("right_gamepad2"))
+		if (Input.IsActionJustPressed("right_gamepad2"))
 		{
 			int currentIndex = _gamepad2IndexPosition == _gamepad2Positions.Count - 1 ? _gamepad2Positions.Count - 1 : ++_gamepad2IndexPosition;
-			if(_gamepad2IndexPosition == _gamepad2Positions.Count - 1  && _gamepad1SelectedPerformer != Performers.Samoussa)
+			if (_gamepad2IndexPosition == _gamepad2Positions.Count - 1)
 			{
-				_gamepad2.Position = (_gamepad2Positions[currentIndex] as Marker2D).Position;
-				OnGamepad2PerformerSelected(Performers.Samoussa);
-			} else
-			{
+				//Player is already selected, play the shake animation
+				if (_gamepad1SelectedPerformer == Performers.Samoussa)
+				{
+					GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad2");
+				} else if (_gamepad1SelectedPerformer != Performers.Samoussa)
+				{
+					OnGamepad2PerformerSelected(Performers.Samoussa, currentIndex);
+				}
+			} else {
                 SelectCPUForGamepad("gamepad2");
             }
 		}
@@ -89,35 +109,37 @@ public partial class SelectPerformer : Node2D
 //-----------------------------------------------------------------------------
 	private void SelectCPUForGamepad(string gamepad)
 	{
-		if(gamepad == "gamepad1")
+		if (gamepad == "gamepad1")
 		{
 			_gamepad1.Position = (_gamepad1Positions[(int)Performers.CPU] as Marker2D).Position;
-			OnGamepad1PerformerSelected(Performers.CPU);
-		} else if(gamepad == "gamepad2")
+			OnGamepad1PerformerSelected(Performers.CPU, (int)Performers.CPU);
+		} else if (gamepad == "gamepad2")
 		{
 			_gamepad2.Position = (_gamepad2Positions[(int)Performers.CPU] as Marker2D).Position;
-			OnGamepad2PerformerSelected(Performers.CPU);
+			OnGamepad2PerformerSelected(Performers.CPU, (int)Performers.CPU);
 		}
 		OnIsGameReadyToPlay();
 	}
 //-----------------------------------------------------------------------------
-	private void OnGamepad1PerformerSelected(Performers performer)
+	private void OnGamepad1PerformerSelected(Performers performer, int index)
 	{
         _gamepad1SelectedPerformer = performer;
+		_gamepad1.Position = (_gamepad1Positions[index] as Marker2D).Position;
         EmitSignal(nameof(Gamepad1PerformerSelected), performer.ToString());
 		OnIsGameReadyToPlay();
     }
 //-----------------------------------------------------------------------------
-	private void OnGamepad2PerformerSelected(Performers performer)
+	private void OnGamepad2PerformerSelected(Performers performer, int index)
 	{
 		_gamepad2SelectedPerformer = performer;
+		_gamepad2.Position = (_gamepad2Positions[index] as Marker2D).Position;
         EmitSignal(nameof(Gamepad2PerformerSelected), performer.ToString());
         OnIsGameReadyToPlay();
     }
 //-----------------------------------------------------------------------------
     private void OnIsGameReadyToPlay()
     {
-        if(_gamepad1SelectedPerformer != Performers.CPU || _gamepad2SelectedPerformer != Performers.CPU)
+        if (_gamepad1SelectedPerformer != Performers.CPU || _gamepad2SelectedPerformer != Performers.CPU)
 		{
             EmitSignal(nameof(IsGameReadyToPlay), true);
         } else
