@@ -3,7 +3,7 @@ using System;
 
 public partial class Performer
 {
-    protected Track _track = null;
+    private Track _track = null;
     private int _currentVerse = 0;
     private int _currentLine = 0;
 

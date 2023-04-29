@@ -22,6 +22,7 @@ public partial class BattleOrchestrator : Control
     private int _currentLineIdx = -1;
     private int _currentLineLength = 0;
     private int _currentPunchIdx = -1;
+    private bool _punchIsDirty = false;
     private ulong _dropStartTimeMs = 0;
 
     // GUI
@@ -37,11 +38,6 @@ public partial class BattleOrchestrator : Control
         _performers[0] = new Performer(TrackFactory.GetTrack1());
         _performers[1] = new Performer(TrackFactory.GetTrack2());
 
-        foreach (Performer p in _performers)
-        {
-            p.PrintTrack();
-        }
-
         _incomingPunchCtrl = GetNode<VBoxContainer>("DropZone/IncomingPunch");
         _incomingPhraseCtrl = GetNode<VBoxContainer>("DropZone/IncomingPhrase");
         _verseCtrl = GetNode<VBoxContainer>("Verse");
@@ -55,11 +51,11 @@ public partial class BattleOrchestrator : Control
     {
         if (_currentPerformerIdx == 0)
         {
-            ProcessInput("left_player1", "right_player1");
+            ProcessInput("left_gamepad1", "right_gamepad1");
         }
         else if (_currentPerformerIdx == 1)
         {
-            ProcessInput("left_player2", "right_player2");
+            ProcessInput("left_gamepad2", "right_gamepad2");
         }
 
         UpdateDropZone();
@@ -70,10 +66,12 @@ public partial class BattleOrchestrator : Control
         if (Input.IsActionJustReleased(leftEvtName))
         {
             _currentPunchIdx = StaticTools.nimod((float)_currentPunchIdx - 1.0f, _performers[_currentPerformerIdx].GetCurrentLine().Punches.Length);
+            _punchIsDirty = true;
         }
         else if (Input.IsActionJustReleased(rightEvtName))
         {
             _currentPunchIdx = StaticTools.nimod((float)_currentPunchIdx + 1.0f, _performers[_currentPerformerIdx].GetCurrentLine().Punches.Length);
+            _punchIsDirty = true;
         }
     }
 
@@ -120,12 +118,14 @@ public partial class BattleOrchestrator : Control
 
         _verseCtrl.GetNode<Label>(_currentLineIdx.ToString()).Text = "...";
 
+        _punchIsDirty = true;
+
         UpdateDropZone();
     }
 
     private void UpdateDropZone()
     {
-        if (true) // isTextDirty
+        if (_punchIsDirty) // isTextDirty
         {
             Line line = _performers[_currentPerformerIdx].GetCurrentLine();
 
@@ -136,6 +136,8 @@ public partial class BattleOrchestrator : Control
             paddedPunchStr = paddedPunchStr.PadRight(_currentLineLength);
 
             _incomingPunchCtrl.GetNode<Label>("Label").Text = paddedPunchStr;
+
+            _punchIsDirty = false;
         }
 
         ulong currentTimeMs = Time.GetTicksMsec();
