@@ -1,16 +1,29 @@
 using Godot;
 
-public partial class Player1 : Sprite2D
+public partial class SelectPerformer : Node2D
 {
-	public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
 	{
-		if(Input.IsActionPressed("left_player1"))
+		Sprite2D roulyo = GetNode<Sprite2D>("Roulyo");
+		Sprite2D samoussa = GetNode<Sprite2D>("Samoussa");
+		Sprite2D player1 = GetNode<Sprite2D>("Player1");
+		Sprite2D player2 = GetNode<Sprite2D>("Player2");
+
+		if(Input.IsActionJustPressed("left_player1"))
 		{
-			GD.Print("move left player1");
+            player1.Position = roulyo.Position;
 		}
-		if(Input.IsActionPressed("right_player1"))
+		if(Input.IsActionJustPressed("right_player1"))
 		{
-			GD.Print("move right player1");
+            player1.Position = samoussa.Position;
+		}
+		if(Input.IsActionJustPressed("left_player2"))
+		{
+			player2.Position = roulyo.Position;
+		}
+		if(Input.IsActionJustPressed("right_player2"))
+		{
+			player2.Position = samoussa.Position;
 		}
 	}
 }
