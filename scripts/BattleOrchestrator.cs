@@ -11,11 +11,15 @@ static public partial class StaticTools
 
 public partial class BattleOrchestrator : Control
 {
+    // SINGAL
+    [Signal]
+    public delegate void BattleEndedEventHandler();
     // LOGIC
     private const int BPM = 120;
     private const int BASE_DROP_TIME_MS = 5000;
     private const string PUNCH_MARK = "_X_";
 
+    private bool _isStarted = false;
     private RandomNumberGenerator rd = new RandomNumberGenerator();
     private Performer[] _performers = new Performer[2];
     private int _currentPerformerIdx = -1;
@@ -29,8 +33,9 @@ public partial class BattleOrchestrator : Control
     private VBoxContainer _incomingPunchCtrl = null;
     private VBoxContainer _incomingPhraseCtrl = null;
     private VBoxContainer _verseCtrl = null;
+    private SelectPerformer _playerManager = null;
 
-    // Called when the node enters the scene tree for the first time.
+//-----------------------------------------------------------------------------
     public override void _Ready()
     {
         rd.Seed = (ulong)Time.GetUnixTimeFromSystem();
@@ -41,19 +46,23 @@ public partial class BattleOrchestrator : Control
         _incomingPunchCtrl = GetNode<VBoxContainer>("DropZone/IncomingPunch");
         _incomingPhraseCtrl = GetNode<VBoxContainer>("DropZone/IncomingPhrase");
         _verseCtrl = GetNode<VBoxContainer>("Verse");
+        _playerManager = GetNode<SelectPerformer>("/root/MainNode/PerformerSelection");
 
         Reset();
-        Start();
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
+//-----------------------------------------------------------------------------
     public override void _Process(double delta)
     {
-        if (_currentPerformerIdx == 0)
+        if (!_isStarted)
+            return;
+
+        // gamepad index is [1-2]
+        if (_currentPerformerIdx == 0 && !_playerManager.IsGamepadCPUBound(1))
         {
             ProcessInput("left_gamepad1", "right_gamepad1");
         }
-        else if (_currentPerformerIdx == 1)
+        else if (_currentPerformerIdx == 1 && !_playerManager.IsGamepadCPUBound(2))
         {
             ProcessInput("left_gamepad2", "right_gamepad2");
         }
@@ -61,6 +70,19 @@ public partial class BattleOrchestrator : Control
         UpdateDropZone();
     }
 
+//-----------------------------------------------------------------------------
+    public int GetScoreForPlayer(uint playerIdx)
+    {
+        if (playerIdx != 1 || playerIdx != 2)
+        {
+            GD.PrintErr("playerIdx should be in [1-2]");
+            return -1;
+        }
+
+        return _performers[playerIdx - 1].Score;
+    }
+
+//-----------------------------------------------------------------------------
     private void ProcessInput(string leftEvtName, string rightEvtName)
     {
         if (Input.IsActionJustReleased(leftEvtName))
@@ -77,8 +99,12 @@ public partial class BattleOrchestrator : Control
         }
     }
 
+//-----------------------------------------------------------------------------
     private void Reset()
     {
+        _performers[0].Score = 0;
+        _performers[1].Score = 0;
+
         _incomingPunchCtrl.GetNode<Label>("Label").Text = "";
         _incomingPhraseCtrl.GetNode<Label>("Label").Text = "";
         _verseCtrl.GetNode<Label>("0").Text = "";
@@ -87,14 +113,19 @@ public partial class BattleOrchestrator : Control
         _verseCtrl.GetNode<Label>("3").Text = "";
     }
 
+//-----------------------------------------------------------------------------
     private void Start()
     {
+        _isStarted = true;
         _currentPerformerIdx = 0;
         _currentLineIdx = 0;
 
         SetDropZone(_performers[_currentPerformerIdx].GetCurrentLine());
+
+        Show();
     }
 
+//-----------------------------------------------------------------------------
     private void SetDropZone(Line line)
     {
         _currentPunchIdx = rd.RandiRange(0, _performers[_currentPerformerIdx].GetCurrentLine().Punches.Length - 1);
@@ -113,7 +144,7 @@ public partial class BattleOrchestrator : Control
 
             _currentLineLength = line.Phrase.Length + maxPunchLength - PUNCH_MARK.Length;
 
-            _incomingPhraseCtrl.GetNode<Label>("Label").Text = line.Phrase.ReplaceN(PUNCH_MARK, voidStr);
+            _incomingPhraseCtrl.GetNode<Label>("Label").Text = line.Phrase.ReplaceN(PUNCH_MARK, voidStr.Replace(" ", "."));
         }
 
         _dropStartTimeMs = Time.GetTicksMsec();
@@ -125,6 +156,7 @@ public partial class BattleOrchestrator : Control
         UpdateDropZone();
     }
 
+//-----------------------------------------------------------------------------
     private void UpdateDropZone()
     {
         if (_punchIsDirty) // isTextDirty
@@ -137,16 +169,23 @@ public partial class BattleOrchestrator : Control
 
             paddedPunchStr = paddedPunchStr.PadRight(_currentLineLength);
 
-            _incomingPunchCtrl.GetNode<Label>("Label").Text = paddedPunchStr;
+            _incomingPunchCtrl.GetNode<Label>("Label").Text = paddedPunchStr.Replace(" ", ".");
 
             _punchIsDirty = false;
         }
 
+        float dropTimeMs = BASE_DROP_TIME_MS;
+
+        if (_playerManager.IsGamepadCPUBound(_currentPerformerIdx + 1))
+        {
+            dropTimeMs /= 2.0f;
+        }
+
         ulong currentTimeMs = Time.GetTicksMsec();
         ulong elapsedTimeMs = currentTimeMs - _dropStartTimeMs;
-        float elapsedRatio = (float)elapsedTimeMs / (float)BASE_DROP_TIME_MS;
+        float elapsedRatio = (float)elapsedTimeMs / dropTimeMs;
 
-        _incomingPunchCtrl.Position = new Vector2(0, _incomingPhraseCtrl.Position.Y * elapsedRatio);
+        _incomingPunchCtrl.Position = new Vector2(_incomingPunchCtrl.Position.X, _incomingPhraseCtrl.Position.Y * elapsedRatio);
 
         if (elapsedRatio >= 1.0f)
         {
@@ -154,8 +193,10 @@ public partial class BattleOrchestrator : Control
         }
     }
 
+//-----------------------------------------------------------------------------
     private void FinalizeDrop()
     {
+        _performers[_currentPerformerIdx].Score += _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Weight;
         string lineStr = _performers[_currentPerformerIdx].GetCurrentLine().Phrase;
         lineStr = lineStr.ReplaceN(PUNCH_MARK, _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Word);
 
@@ -172,6 +213,19 @@ public partial class BattleOrchestrator : Control
             _performers[_currentPerformerIdx].GoToNextLine();
         }
 
-        SetDropZone(_performers[_currentPerformerIdx].GetCurrentLine());
+        if (_performers[0].IsTrackOver && _performers[1].IsTrackOver)
+        {
+            EmitSignal(nameof(BattleEnded));
+        }
+        else
+        {
+            SetDropZone(_performers[_currentPerformerIdx].GetCurrentLine());
+        }
+    }
+
+//-----------------------------------------------------------------------------
+    private void OnCountdownReachedZero()
+    {
+        Start();
     }
 }

@@ -2,6 +2,9 @@ using Godot;
 
 public partial class HUD : Control
 {
+    [Signal]
+    public delegate void CountdownReachedZeroEventHandler();
+
     private bool _isGameReadyToPlay = false;
     private int  _countdown = 3;
     public override void _Input(InputEvent inputEvent)
@@ -22,6 +25,7 @@ public partial class HUD : Control
         {
             GetNode<Timer>("CountdownToStart").Stop();
             GetNode<Label>("Countdown").Hide();
+            EmitSignal(nameof(CountdownReachedZero));
         }
     }
 //-----------------------------------------------------------------------------

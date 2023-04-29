@@ -28,6 +28,7 @@ public class TrackFactory
     static private Track _track1 = null;
     static private Track _track2 = null;
 
+//-----------------------------------------------------------------------------
     static public Track GetTrack1()
     {
         if (_track1 != null)
@@ -70,6 +71,7 @@ public class TrackFactory
         return _track1;
     }
 
+//-----------------------------------------------------------------------------
     static public Track GetTrack2()
     {
         if (_track2 != null)
