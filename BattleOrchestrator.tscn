@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2xcgudpkyw5i"]
+[gd_scene load_steps=7 format=3 uid="uid://dplc7nu0uhmil"]
 
 [ext_resource type="Script" path="res://scripts/BattleOrchestrator.cs" id="1_il46s"]
-[ext_resource type="Theme" uid="uid://dkda5wmy5pmwj" path="res://assets/LabelContainerTheme.tres" id="2_bjb0y"]
-[ext_resource type="Theme" uid="uid://dfssr6q3mq1d7" path="res://assets/LyricsLabelTheme.tres" id="3_euh07"]
+[ext_resource type="Theme" path="res://assets/LabelContainerTheme.tres" id="2_bjb0y"]
+[ext_resource type="Theme" path="res://assets/LyricsLabelTheme.tres" id="3_euh07"]
+[ext_resource type="AudioStream" uid="uid://bg21b2tdkyykj" path="res://assets/sounds/scribble-roulyo.mp3" id="4_wiuor"]
+[ext_resource type="AudioStream" uid="uid://gx1g8fr7nol3" path="res://assets/sounds/scribble-samoussa.mp3" id="4_ybs88"]
 
 [sub_resource type="Theme" id="Theme_m6vvn"]
 PanelContainer/styles/panel = null
@@ -96,3 +98,9 @@ text = "T'as plus qu'à rentrer chez oit"
 layout_mode = 2
 theme = ExtResource("3_euh07")
 text = "..."
+
+[node name="ScribbleRoulyo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_wiuor")
+
+[node name="ScribbleSamoussa" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ybs88")
