@@ -87,11 +87,13 @@ public partial class BattleOrchestrator : Control
     {
         if (Input.IsActionJustReleased(leftEvtName))
         {
+             GetNode<AudioStreamPlayer>("ScribbleRoulyo").Play();
             _currentPunchIdx = StaticTools.nimod((float)_currentPunchIdx - 1.0f, _performers[_currentPerformerIdx].GetCurrentLine().Punches.Length);
             _punchIsDirty = true;
         }
         else if (Input.IsActionJustReleased(rightEvtName))
         {
+            GetNode<AudioStreamPlayer>("ScribbleSamoussa").Play();
             _currentPunchIdx = StaticTools.nimod((float)_currentPunchIdx + 1.0f, _performers[_currentPerformerIdx].GetCurrentLine().Punches.Length);
             _punchIsDirty = true;
         }

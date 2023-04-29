@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://bbr1jut0flnjc"]
 
-[ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="1_dhaps"]
-[ext_resource type="Texture2D" uid="uid://cb0j5x6atcj48" path="res://assets/icon.svg" id="1_dkpgv"]
-[ext_resource type="Script" path="res://scripts/HUD.cs" id="1_ptoqr"]
-[ext_resource type="Texture2D" uid="uid://biwcb6pdcjcl1" path="res://assets/gamepad.png" id="2_3qm52"]
-[ext_resource type="PackedScene" uid="uid://b2xcgudpkyw5i" path="res://BattleOrchestrator.tscn" id="3_dew1n"]
+[ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
+[ext_resource type="Texture2D" uid="uid://cb0j5x6atcj48" path="res://assets/icon.svg" id="2_w51pf"]
+[ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
+[ext_resource type="Texture2D" uid="uid://biwcb6pdcjcl1" path="res://assets/gamepad.png" id="4_plkmf"]
+[ext_resource type="PackedScene" uid="uid://dplc7nu0uhmil" path="res://BattleOrchestrator.tscn" id="5_xlc77"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2glp4"]
 size = Vector2(128, 128)
@@ -85,7 +85,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ptoqr")
+script = ExtResource("1_w64m3")
 
 [node name="GameTitle" type="Label" parent="HUD"]
 layout_mode = 1
@@ -101,7 +101,7 @@ text = "Game Title"
 [node name="Roulyo" type="Sprite2D" parent="HUD"]
 modulate = Color(0, 0.623529, 0.552941, 1)
 position = Vector2(232, 336)
-texture = ExtResource("1_dkpgv")
+texture = ExtResource("2_w51pf")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="HUD/Roulyo"]
 
@@ -119,7 +119,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Samoussa" type="Sprite2D" parent="HUD"]
 modulate = Color(0.517647, 0.0235294, 0.666667, 1)
 position = Vector2(1003, 343)
-texture = ExtResource("1_dkpgv")
+texture = ExtResource("2_w51pf")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="HUD/Samoussa"]
 
@@ -177,16 +177,16 @@ text = "3"
 [node name="CountdownToStart" type="Timer" parent="HUD"]
 
 [node name="PerformerSelection" type="Node2D" parent="."]
-script = ExtResource("1_dhaps")
+script = ExtResource("3_g410e")
 
 [node name="Gamepad1" type="Sprite2D" parent="PerformerSelection"]
 scale = Vector2(0.240745, 0.25)
-texture = ExtResource("2_3qm52")
+texture = ExtResource("4_plkmf")
 
 [node name="Gamepad2" type="Sprite2D" parent="PerformerSelection"]
 modulate = Color(0.207843, 0.866667, 1, 1)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_3qm52")
+texture = ExtResource("4_plkmf")
 
 [node name="Roulyo" type="Marker2D" parent="PerformerSelection" groups=["Gamepad1Position", "Gamepad2Position"]]
 position = Vector2(218, 351)
@@ -206,6 +206,7 @@ libraries = {
 }
 
 [connection signal="CountdownReachedZero" from="HUD" to="HUD/BattleOrchestrator" method="OnCountdownReachedZero"]
+
 [connection signal="timeout" from="HUD/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
 [connection signal="Gamepad1PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad1PerformerSelected"]
 [connection signal="Gamepad2PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad2PerformerSelected"]
