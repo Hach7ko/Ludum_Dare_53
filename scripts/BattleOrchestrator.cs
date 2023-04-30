@@ -5,15 +5,17 @@ static public partial class StaticTools
 {
     static public int nimod(float a, float b)
     {
-        return  (int)(a - b * Math.Floor(a / b));
+        return (int)(a - b * Math.Floor(a / b));
     }
 }
 
 public partial class BattleOrchestrator : Control
 {
-    // SINGAL
+    // SIGNAL
     [Signal]
     public delegate void BattleEndedEventHandler();
+    [Signal]
+    public delegate void UpdateScoreEventHandler(string performer1, string performer2);
     // LOGIC
     private const int BPM = 120;
     private const int BASE_DROP_TIME_MS = 5000;
@@ -30,12 +32,12 @@ public partial class BattleOrchestrator : Control
     private ulong _dropStartTimeMs = 0;
 
     // GUI
-    private VBoxContainer _incomingPunchCtrl = null;
-    private VBoxContainer _incomingPhraseCtrl = null;
+    private Label _incomingPunchLabel = null;
+    private Label _incomingPhraseLabel = null;
     private VBoxContainer _verseCtrl = null;
     private SelectPerformer _playerManager = null;
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     public override void _Ready()
     {
         rd.Seed = (ulong)Time.GetUnixTimeFromSystem();
@@ -43,15 +45,15 @@ public partial class BattleOrchestrator : Control
         _performers[0] = new Performer(TrackFactory.GetTrack1());
         _performers[1] = new Performer(TrackFactory.GetTrack2());
 
-        _incomingPunchCtrl = GetNode<VBoxContainer>("DropZone/IncomingPunch");
-        _incomingPhraseCtrl = GetNode<VBoxContainer>("DropZone/IncomingPhrase");
+        _incomingPunchLabel = GetNode<Label>("IncomingPunch");
+        _incomingPhraseLabel = GetNode<Label>("IncomingPhrase");
         _verseCtrl = GetNode<VBoxContainer>("Verse");
         _playerManager = GetNode<SelectPerformer>("/root/MainNode/PerformerSelection");
 
         Reset();
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     public override void _Process(double delta)
     {
         if (!_isStarted)
@@ -70,24 +72,25 @@ public partial class BattleOrchestrator : Control
         UpdateDropZone();
     }
 
-//-----------------------------------------------------------------------------
-    public int GetScoreForPlayer(uint playerIdx)
+    //-----------------------------------------------------------------------------
+    public string GetScoreForPlayer(uint playerIdx)
     {
-        if (playerIdx != 1 || playerIdx != 2)
+        GD.Print(playerIdx);
+        if (playerIdx != 1 && playerIdx != 2)
         {
             GD.PrintErr("playerIdx should be in [1-2]");
-            return -1;
+            return null;
         }
 
-        return _performers[playerIdx - 1].Score;
+        return _performers[playerIdx - 1].Score.ToString();
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void ProcessInput(string leftEvtName, string rightEvtName)
     {
         if (Input.IsActionJustReleased(leftEvtName))
         {
-             GetNode<AudioStreamPlayer>("ScribbleRoulyo").Play();
+            GetNode<AudioStreamPlayer>("ScribbleRoulyo").Play();
             _currentPunchIdx = StaticTools.nimod((float)_currentPunchIdx - 1.0f, _performers[_currentPerformerIdx].GetCurrentLine().Punches.Length);
             _punchIsDirty = true;
         }
@@ -99,21 +102,21 @@ public partial class BattleOrchestrator : Control
         }
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void Reset()
     {
         _performers[0].Score = 0;
         _performers[1].Score = 0;
 
-        _incomingPunchCtrl.GetNode<Label>("Label").Text = "";
-        _incomingPhraseCtrl.GetNode<Label>("Label").Text = "";
+        _incomingPunchLabel.Text = "";
+        _incomingPhraseLabel.Text = "";
         _verseCtrl.GetNode<Label>("0").Text = "";
         _verseCtrl.GetNode<Label>("1").Text = "";
         _verseCtrl.GetNode<Label>("2").Text = "";
         _verseCtrl.GetNode<Label>("3").Text = "";
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void Start()
     {
         _isStarted = true;
@@ -125,7 +128,7 @@ public partial class BattleOrchestrator : Control
         Show();
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void SetDropZone(Line line)
     {
         _currentPunchIdx = rd.RandiRange(0, _performers[_currentPerformerIdx].GetCurrentLine().Punches.Length - 1);
@@ -144,7 +147,7 @@ public partial class BattleOrchestrator : Control
 
             _currentLineLength = line.Phrase.Length + maxPunchLength - PUNCH_MARK.Length;
 
-            _incomingPhraseCtrl.GetNode<Label>("Label").Text = line.Phrase.ReplaceN(PUNCH_MARK, voidStr.Replace(" ", "."));
+            _incomingPhraseLabel.Text = line.Phrase.ReplaceN(PUNCH_MARK, voidStr.Replace(" ", "."));
         }
 
         _dropStartTimeMs = Time.GetTicksMsec();
@@ -156,7 +159,7 @@ public partial class BattleOrchestrator : Control
         UpdateDropZone();
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void UpdateDropZone()
     {
         if (_punchIsDirty) // isTextDirty
@@ -169,7 +172,7 @@ public partial class BattleOrchestrator : Control
 
             paddedPunchStr = paddedPunchStr.PadRight(_currentLineLength);
 
-            _incomingPunchCtrl.GetNode<Label>("Label").Text = paddedPunchStr.Replace(" ", ".");
+            _incomingPunchLabel.Text = paddedPunchStr.Replace(" ", ".");
 
             _punchIsDirty = false;
         }
@@ -185,7 +188,7 @@ public partial class BattleOrchestrator : Control
         ulong elapsedTimeMs = currentTimeMs - _dropStartTimeMs;
         float elapsedRatio = (float)elapsedTimeMs / dropTimeMs;
 
-        _incomingPunchCtrl.Position = new Vector2(_incomingPunchCtrl.Position.X, _incomingPhraseCtrl.Position.Y * elapsedRatio);
+        _incomingPunchLabel.Position = new Vector2(_incomingPunchLabel.Position.X, _incomingPhraseLabel.Position.Y * elapsedRatio);
 
         if (elapsedRatio >= 1.0f)
         {
@@ -193,12 +196,13 @@ public partial class BattleOrchestrator : Control
         }
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void FinalizeDrop()
     {
         int weight = _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Weight;
         _performers[_currentPerformerIdx].Score += weight;
         PlayScoreSound(weight);
+        EmitSignal(nameof(UpdateScore), GetScoreForPlayer(1), GetScoreForPlayer(2));
         string lineStr = _performers[_currentPerformerIdx].GetCurrentLine().Phrase;
         lineStr = lineStr.ReplaceN(PUNCH_MARK, _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Word);
 
@@ -225,15 +229,15 @@ public partial class BattleOrchestrator : Control
         }
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void OnCountdownReachedZero()
     {
         Start();
     }
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void PlayScoreSound(int weight)
     {
-        switch(weight) 
+        switch (weight)
         {
             case 0:
                 GetNode<AudioStreamPlayer>("Boo").Play();
@@ -243,7 +247,7 @@ public partial class BattleOrchestrator : Control
                 break;
             case 2:
                 GetNode<AudioStreamPlayer>("Yeah").Play();
-            break;
+                break;
         }
     }
 }

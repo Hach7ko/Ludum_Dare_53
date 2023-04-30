@@ -8,6 +8,7 @@ public partial class SelectPerformer : Node2D
     public delegate void Gamepad2PerformerSelectedEventHandler(string performer);
     [Signal]
     public delegate void IsGameReadyToPlayEventHandler(bool isGameReadyToPlay);
+    private const int SPACE_BETWEEN_GAMEPAD = 100; //px
     enum Performers : int
     {
         Roulyo = 0,
@@ -30,10 +31,11 @@ public partial class SelectPerformer : Node2D
         _gamepad2Positions = GetTree().GetNodesInGroup("Gamepad2Position");
 
         _gamepad1 = GetNode<Sprite2D>("Gamepad1");
-        _gamepad1.Position = (_gamepad1Positions[(int)Performers.CPU] as Marker2D).Position;
+        _gamepad1.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 - SPACE_BETWEEN_GAMEPAD);
 
         _gamepad2 = GetNode<Sprite2D>("Gamepad2");
-        _gamepad2.Position = (_gamepad2Positions[(int)Performers.CPU] as Marker2D).Position;
+        _gamepad2.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 + SPACE_BETWEEN_GAMEPAD);
+
     }
     //-----------------------------------------------------------------------------
     public override void _PhysicsProcess(double delta)
@@ -138,13 +140,15 @@ public partial class SelectPerformer : Node2D
     {
         if (gamepad == "gamepad1")
         {
-            _gamepad1.Position = (_gamepad1Positions[(int)Performers.CPU] as Marker2D).Position;
-            OnGamepad1PerformerSelected(Performers.CPU, (int)Performers.CPU);
+            _gamepad1SelectedPerformer = Performers.CPU;
+            _gamepad1.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 - 100);
+            EmitSignal(nameof(Gamepad1PerformerSelected), Performers.CPU.ToString());
         }
         else if (gamepad == "gamepad2")
         {
-            _gamepad2.Position = (_gamepad2Positions[(int)Performers.CPU] as Marker2D).Position;
-            OnGamepad2PerformerSelected(Performers.CPU, (int)Performers.CPU);
+            _gamepad2SelectedPerformer = Performers.CPU;
+            _gamepad2.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 + 100);
+            EmitSignal(nameof(Gamepad2PerformerSelected), Performers.CPU.ToString());
         }
         OnIsGameReadyToPlay();
     }
@@ -152,7 +156,7 @@ public partial class SelectPerformer : Node2D
     private void OnGamepad1PerformerSelected(Performers performer, int index)
     {
         _gamepad1SelectedPerformer = performer;
-        _gamepad1.Position = (_gamepad1Positions[index] as Marker2D).Position;
+        _gamepad1.GlobalPosition = (_gamepad1Positions[index] as Marker2D).GlobalPosition;
         EmitSignal(nameof(Gamepad1PerformerSelected), performer.ToString());
         OnIsGameReadyToPlay();
     }
@@ -160,7 +164,7 @@ public partial class SelectPerformer : Node2D
     private void OnGamepad2PerformerSelected(Performers performer, int index)
     {
         _gamepad2SelectedPerformer = performer;
-        _gamepad2.Position = (_gamepad2Positions[index] as Marker2D).Position;
+        _gamepad2.GlobalPosition = (_gamepad2Positions[index] as Marker2D).GlobalPosition;
         EmitSignal(nameof(Gamepad2PerformerSelected), performer.ToString());
         OnIsGameReadyToPlay();
     }

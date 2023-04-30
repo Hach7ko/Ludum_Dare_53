@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dplc7nu0uhmil"]
+[gd_scene load_steps=9 format=3 uid="uid://dplc7nu0uhmil"]
 
 [ext_resource type="Script" path="res://scripts/BattleOrchestrator.cs" id="1_il46s"]
-[ext_resource type="Theme" path="res://assets/LabelContainerTheme.tres" id="2_bjb0y"]
-[ext_resource type="Theme" path="res://assets/LyricsLabelTheme.tres" id="3_euh07"]
+[ext_resource type="Theme" uid="uid://bgeptvxkeqj0h" path="res://assets/LyricsLabelTheme.tres" id="3_euh07"]
 [ext_resource type="AudioStream" uid="uid://bg21b2tdkyykj" path="res://assets/sounds/scribble-roulyo.mp3" id="4_wiuor"]
 [ext_resource type="AudioStream" uid="uid://gx1g8fr7nol3" path="res://assets/sounds/scribble-samoussa.mp3" id="4_ybs88"]
 [ext_resource type="AudioStream" uid="uid://7krlpftyd767" path="res://assets/sounds/boo.mp3" id="6_n43sr"]
@@ -13,74 +12,38 @@
 PanelContainer/styles/panel = null
 VBoxContainer/constants/separation = 20
 
-[node name="BattleOrchestrator" type="Control"]
-layout_mode = 3
+[node name="BattleOrchestrator" type="VBoxContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 4
 script = ExtResource("1_il46s")
 
-[node name="DropZone" type="Control" parent="."]
-layout_mode = 1
-anchor_right = 1.00087
-anchor_bottom = 0.618827
-offset_bottom = 3.05176e-05
-grow_horizontal = 2
-theme = ExtResource("2_bjb0y")
-metadata/_edit_use_anchors_ = true
-
-[node name="IncomingPunch" type="VBoxContainer" parent="DropZone"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 39.0
-grow_horizontal = 2
-
-[node name="Label" type="Label" parent="DropZone/IncomingPunch"]
+[node name="IncomingPunch" type="Label" parent="."]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_vertical = 6
 theme = ExtResource("3_euh07")
 text = "                   draps"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="IncomingPhrase" type="VBoxContainer" parent="DropZone"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0026019
-anchor_top = 0.847619
-anchor_right = 1.0026
-anchor_bottom = 0.940476
-grow_horizontal = 2
-grow_vertical = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="DropZone/IncomingPhrase"]
+[node name="IncomingPhrase" type="Label" parent="."]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_vertical = 10
 theme = ExtResource("3_euh07")
 text = "Te cacher sous tes        "
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="DropZone"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -4.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
 
 [node name="Verse" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.666667
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
+layout_mode = 2
+size_flags_vertical = 10
 theme = SubResource("Theme_m6vvn")
-metadata/_edit_use_anchors_ = true
 
 [node name="0" type="Label" parent="Verse"]
 layout_mode = 2

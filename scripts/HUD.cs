@@ -7,7 +7,7 @@ public partial class HUD : Control
     [Signal]
     public delegate void GameStartedEventHandler();
     private bool _isGameReadyToPlay = false;
-    private int  _countdown = 3;
+    private int _countdown = 3;
     private bool _isGameStarted = false;
     public override void _Input(InputEvent inputEvent)
     {
@@ -15,45 +15,59 @@ public partial class HUD : Control
         {
             EmitSignal(nameof(GameStarted));
             _isGameStarted = true;
-            GetNode<Label>("Countdown").Show();
-            GetNode<Timer>("CountdownToStart").Start();
+            GetNode<Label>("Main/Middle/Countdown").Show();
+            GetNode<Timer>("Main/Middle/CountdownToStart").Start();
             GetNode<Node2D>("../PerformerSelection").Hide();
-            GetNode<Label>("PressToStart").Hide();
+            GetNode<Label>("Footer/PressToStart").Hide();
+            GetNode<Label>("Header/GameTitle").Hide();
         }
     }
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     public void OnCountdownToStartTimeout()
     {
         --_countdown;
-        GetNode<Label>("Countdown").Text = _countdown.ToString();
+        GetNode<Label>("Main/Middle/Countdown").Text = _countdown.ToString();
         if (_countdown == 0)
         {
             _isGameReadyToPlay = false;
-            GetNode<Timer>("CountdownToStart").Stop();
-            GetNode<Label>("Countdown").Hide();
+            GetNode<Timer>("Main/Middle/CountdownToStart").Stop();
+            GetNode<Label>("Main/Middle/Countdown").Hide();
             EmitSignal(nameof(CountdownReachedZero));
         }
     }
-//-----------------------------------------------------------------------------
-	private void OnGamepad1PerformerSelected(string performer)
+    //-----------------------------------------------------------------------------
+    private void OnGamepad1PerformerSelected(string performer)
     {
-        GetNode<Label>("Gamepad1Peformer").Text = "Gamepad1 will play:" + performer;
+        GetNode<Label>("Header/Gamepad1/Gamepad1Peformer").Text = "Player 1 : " + performer;
     }
 
     private void OnGamepad2PerformerSelected(string performer)
     {
-        GetNode<Label>("Gamepad2Peformer").Text = "Gamepad2 will play:" + performer;
+        GetNode<Label>("Header/Gamepad2/Gamepad2Peformer").Text = "Player 2 : " + performer;
     }
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private void OnIsGameReadyToPlay(bool isGameReadyToPlay)
     {
         _isGameReadyToPlay = isGameReadyToPlay;
         if (_isGameReadyToPlay)
         {
-            GetNode<Label>("PressToStart").Show();
-        } else
-        {
-            GetNode<Label>("PressToStart").Hide();
+            GetNode<Label>("Footer/PressToStart").Show();
         }
+        else
+        {
+            GetNode<Label>("Footer/PressToStart").Hide();
+        }
+    }
+    //-----------------------------------------------------------------------------
+    private void OnBattleEnded()
+    {
+        _isGameStarted = false;
+        GetNode<Label>("Header/GameTitle").Show();
+    }
+    //-----------------------------------------------------------------------------
+    private void OnUpdateScore(string performer1, string performer2)
+    {
+        GetNode<Label>("Header/Gamepad1/Score").Text = performer1;
+        GetNode<Label>("Header/Gamepad2/Score").Text = performer2;
     }
 }

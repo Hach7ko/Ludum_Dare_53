@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bbr1jut0flnjc"]
+[gd_scene load_steps=15 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
+[ext_resource type="Theme" uid="uid://t2les4oqrvbt" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
 [ext_resource type="Texture2D" uid="uid://cb0j5x6atcj48" path="res://assets/icon.svg" id="2_w51pf"]
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
+[ext_resource type="FontFile" uid="uid://doekgfrn2i3jt" path="res://assets/fonts/aAttackGraffiti.otf" id="3_xdvi4"]
 [ext_resource type="Texture2D" uid="uid://biwcb6pdcjcl1" path="res://assets/gamepad.png" id="4_plkmf"]
 [ext_resource type="PackedScene" uid="uid://dplc7nu0uhmil" path="res://BattleOrchestrator.tscn" id="5_xlc77"]
 [ext_resource type="AudioStream" uid="uid://b06woaien0e7b" path="res://assets/sounds/ld53beat.ogg" id="6_3j7yh"]
@@ -86,97 +88,182 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 4
 script = ExtResource("1_w64m3")
 
-[node name="GameTitle" type="Label" parent="HUD"]
+[node name="Header" type="HBoxContainer" parent="HUD"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -42.0
-offset_right = 42.0
-offset_bottom = 26.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 10.0
+offset_bottom = 62.0
 grow_horizontal = 2
-text = "Game Title"
 
-[node name="Roulyo" type="Sprite2D" parent="HUD"]
+[node name="Gamepad1" type="HBoxContainer" parent="HUD/Header"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Gamepad1Peformer" type="Label" parent="HUD/Header/Gamepad1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_fixqy")
+text = "Player 1 : CPU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="HUD/Header/Gamepad1"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Gamepad1" type="Sprite2D" parent="HUD/Header/Gamepad1/Control"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_plkmf")
+centered = false
+
+[node name="Score" type="Label" parent="HUD/Header/Gamepad1"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_fixqy")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameTitle" type="Label" parent="HUD/Header"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("3_xdvi4")
+theme_override_font_sizes/font_size = 48
+text = "Game Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gamepad2" type="HBoxContainer" parent="HUD/Header"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Gamepad2Peformer" type="Label" parent="HUD/Header/Gamepad2"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+theme = ExtResource("2_fixqy")
+text = "Player 2 : CPU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="HUD/Header/Gamepad2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Gamepad2" type="Sprite2D" parent="HUD/Header/Gamepad2/Control"]
+modulate = Color(0.207843, 0.866667, 1, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_plkmf")
+centered = false
+
+[node name="Score" type="Label" parent="HUD/Header/Gamepad2"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_fixqy")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Main" type="HBoxContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="VBoxContainer" parent="HUD/Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Performer" type="Control" parent="HUD/Main/Left"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Roulyo" type="Sprite2D" parent="HUD/Main/Left/Performer"]
 modulate = Color(0, 0.623529, 0.552941, 1)
-position = Vector2(232, 336)
 texture = ExtResource("2_w51pf")
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="HUD/Roulyo"]
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="HUD/Main/Left/Performer/Roulyo"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Roulyo/AnimatableBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Left/Performer/Roulyo/AnimatableBody2D"]
 shape = SubResource("RectangleShape2D_2glp4")
 
-[node name="BattleOrchestrator" parent="HUD" instance=ExtResource("5_xlc77")]
-visible = false
-layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -263.0
-offset_right = 343.0
+[node name="Roulyo" type="Marker2D" parent="HUD/Main/Left/Performer/Roulyo" groups=["Gamepad1Position", "Gamepad2Position"]]
 
-[node name="Samoussa" type="Sprite2D" parent="HUD"]
+[node name="Middle" type="VBoxContainer" parent="HUD/Main"]
+custom_minimum_size = Vector2(72, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 2.0
+
+[node name="BattleOrchestrator" parent="HUD/Main/Middle" instance=ExtResource("5_xlc77")]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Countdown" type="Label" parent="HUD/Main/Middle"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme = ExtResource("2_fixqy")
+theme_override_font_sizes/font_size = 72
+text = "3"
+
+[node name="CountdownToStart" type="Timer" parent="HUD/Main/Middle"]
+
+[node name="P1Unselected" type="Marker2D" parent="HUD/Main/Middle" groups=["Gamepad1Position"]]
+
+[node name="P2Unselected" type="Marker2D" parent="HUD/Main/Middle" groups=["Gamepad2Position"]]
+
+[node name="Right" type="VBoxContainer" parent="HUD/Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Performer" type="Control" parent="HUD/Main/Right"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Samoussa" type="Sprite2D" parent="HUD/Main/Right/Performer"]
 modulate = Color(0.517647, 0.0235294, 0.666667, 1)
-position = Vector2(1003, 343)
 texture = ExtResource("2_w51pf")
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="HUD/Samoussa"]
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="HUD/Main/Right/Performer/Samoussa"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Samoussa/AnimatableBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Right/Performer/Samoussa/AnimatableBody2D"]
 shape = SubResource("RectangleShape2D_h60i4")
 
-[node name="PressToStart" type="Label" parent="HUD"]
-visible = false
+[node name="Samoussa" type="Marker2D" parent="HUD/Main/Right/Performer/Samoussa" groups=["Gamepad1Position", "Gamepad2Position"]]
+
+[node name="Footer" type="BoxContainer" parent="HUD"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -78.0
-offset_top = -52.0
-offset_right = 78.0
 grow_horizontal = 2
 grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="PressToStart" type="Label" parent="HUD/Footer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_fixqy")
 text = "Ready for battle?
 Press space to start!"
-
-[node name="Gamepad1Peformer" type="Label" parent="HUD"]
-layout_mode = 1
-offset_right = 94.0
-offset_bottom = 26.0
-text = "Gamepad1 will play: CPU"
-
-[node name="Gamepad2Peformer" type="Label" parent="HUD"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -119.0
-offset_bottom = 26.0
-grow_horizontal = 0
-text = "Gamepad2 will play: CPU"
-
-[node name="Countdown" type="Label" parent="HUD"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -13.0
-offset_right = 20.0
-offset_bottom = 13.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "3"
-
-[node name="CountdownToStart" type="Timer" parent="HUD"]
 
 [node name="PerformerSelection" type="Node2D" parent="."]
 script = ExtResource("3_g410e")
@@ -190,33 +277,19 @@ modulate = Color(0.207843, 0.866667, 1, 1)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_plkmf")
 
-[node name="Roulyo" type="Marker2D" parent="PerformerSelection" groups=["Gamepad1Position", "Gamepad2Position"]]
-position = Vector2(218, 351)
-
-[node name="P1Unselected" type="Marker2D" parent="PerformerSelection" groups=["Gamepad1Position"]]
-position = Vector2(593, 254)
-
-[node name="P2Unselected" type="Marker2D" parent="PerformerSelection" groups=["Gamepad2Position"]]
-position = Vector2(590, 395)
-
-[node name="Samoussa" type="Marker2D" parent="PerformerSelection" groups=["Gamepad1Position", "Gamepad2Position"]]
-position = Vector2(990, 360)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_c534j")
 }
 
-[node name="BattleOrchestrator" parent="." instance=ExtResource("5_xlc77")]
-visible = false
-
 [node name="MainBeat" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_3j7yh")
 autoplay = true
 
-[connection signal="CountdownReachedZero" from="HUD" to="HUD/BattleOrchestrator" method="OnCountdownReachedZero"]
+[connection signal="CountdownReachedZero" from="HUD" to="HUD/Main/Middle/BattleOrchestrator" method="OnCountdownReachedZero"]
 [connection signal="GameStarted" from="HUD" to="PerformerSelection" method="OnGameStarted"]
-[connection signal="timeout" from="HUD/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
+[connection signal="UpdateScore" from="HUD/Main/Middle/BattleOrchestrator" to="HUD" method="OnUpdateScore"]
+[connection signal="timeout" from="HUD/Main/Middle/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
 [connection signal="Gamepad1PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad1PerformerSelected"]
 [connection signal="Gamepad2PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad2PerformerSelected"]
 [connection signal="IsGameReadyToPlay" from="PerformerSelection" to="HUD" method="OnIsGameReadyToPlay"]
