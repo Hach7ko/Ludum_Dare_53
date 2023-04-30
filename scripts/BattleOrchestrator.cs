@@ -13,7 +13,7 @@ public partial class BattleOrchestrator : Control
 {
     // SIGNAL
     [Signal]
-    public delegate void BattleEndedEventHandler(int winner);
+    public delegate void BattleEndedEventHandler();
     [Signal]
     public delegate void UpdateScoreEventHandler(string performer1, string performer2);
     // LOGIC
@@ -37,6 +37,10 @@ public partial class BattleOrchestrator : Control
     private VBoxContainer _verseCtrl = null;
     private SelectPerformer _playerManager = null;
 
+    // SPRITE
+    private AnimatedSprite2D _roulyoSprite;
+    private AnimatedSprite2D _samoussaSprite;
+
     //-----------------------------------------------------------------------------
     public override void _Ready()
     {
@@ -50,6 +54,9 @@ public partial class BattleOrchestrator : Control
         _verseCtrl = GetNode<VBoxContainer>("Verse");
         _playerManager = GetNode<SelectPerformer>("/root/MainNode/PerformerSelection");
 
+        _roulyoSprite = GetNode<AnimatedSprite2D>("/root/MainNode/HUD/Main/Left/Performer/Roulyo/AnimatedSprite2D");
+        _samoussaSprite = GetNode<AnimatedSprite2D>("/root/MainNode/HUD/Main/Right/Performer/Samoussa/AnimatedSprite2D");
+
         Reset();
     }
 
@@ -62,14 +69,31 @@ public partial class BattleOrchestrator : Control
         // gamepad index is [1-2]
         if (_currentPerformerIdx == 0 && !_playerManager.IsGamepadCPUBound(1))
         {
+            PlayClashingAnimation(GetCurrentPerformer(_currentPerformerIdx));
             ProcessInput("left_gamepad1", "right_gamepad1");
         }
         else if (_currentPerformerIdx == 1 && !_playerManager.IsGamepadCPUBound(2))
         {
+            PlayClashingAnimation(GetCurrentPerformer(_currentPerformerIdx));
             ProcessInput("left_gamepad2", "right_gamepad2");
         }
 
         UpdateDropZone();
+    }
+    //-----------------------------------------------------------------------------
+    private void PlayClashingAnimation(string performer)
+    {
+        switch (performer)
+        {
+            case "Roulyo":
+                _roulyoSprite.Play("rap");
+                _samoussaSprite.Play("idle");
+                break;
+            case "Samoussa":
+                _samoussaSprite.Play("rap");
+                _roulyoSprite.Play("idle");
+                break;
+        }
     }
 
     //-----------------------------------------------------------------------------
@@ -118,7 +142,11 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     private void Start()
     {
+        _roulyoSprite.Play("rap");
+        _samoussaSprite.Play("rap");
+
         Reset();
+
         _isStarted = true;
         _currentPerformerIdx = 0;
         _currentLineIdx = 0;
@@ -201,7 +229,7 @@ public partial class BattleOrchestrator : Control
     {
         int weight = _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Weight;
         _performers[_currentPerformerIdx].Score += weight;
-        PlayScoreSound(weight);
+        PlayScoreSound(weight, _currentPerformerIdx);
         EmitSignal(nameof(UpdateScore), GetScoreForPlayer(1), GetScoreForPlayer(2));
         string lineStr = _performers[_currentPerformerIdx].GetCurrentLine().Phrase;
         lineStr = lineStr.ReplaceN(PUNCH_MARK, _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Word);
@@ -212,6 +240,7 @@ public partial class BattleOrchestrator : Control
         if (_currentLineIdx == 0) // we looped
         {
             _currentPerformerIdx = StaticTools.nimod(_currentPerformerIdx + 1, 2);
+            //TODO: Maybe not a good reset?
             Reset();
         }
         else
@@ -232,22 +261,7 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     private void FinalizeBattle()
     {
-        if (GetScoreForPlayer(1) != GetScoreForPlayer(2))
-        {
-            if (GetScoreForPlayer(1).ToInt() > GetScoreForPlayer(2).ToInt())
-            {
-                EmitSignal(nameof(BattleEnded), 1);
-            }
-            else
-            {
-                EmitSignal(nameof(BattleEnded), 2);
-            }
-        }
-        else if (GetScoreForPlayer(1).ToInt() == GetScoreForPlayer(2).ToInt())
-        {
-            EmitSignal(nameof(BattleEnded), 0);
-        }
-
+        EmitSignal(nameof(BattleEnded));
         _isStarted = false;
         Hide();
     }
@@ -259,7 +273,7 @@ public partial class BattleOrchestrator : Control
     }
 
     //-----------------------------------------------------------------------------
-    private void PlayScoreSound(int weight)
+    private void PlayScoreSound(int weight, int currentPerformerIdx)
     {
         switch (weight)
         {
@@ -271,7 +285,39 @@ public partial class BattleOrchestrator : Control
                 break;
             case 2:
                 GetNode<AudioStreamPlayer>("Yeah").Play();
+                PlayHitAnimations(currentPerformerIdx);
                 break;
         }
+    }
+    //-----------------------------------------------------------------------------
+    private void PlayHitAnimations(int currentPerformerIdx)
+    {
+        switch (GetCurrentPerformer(currentPerformerIdx))
+        {
+            case "Roulyo":
+                _samoussaSprite.Play("hit");
+                break;
+            case "Samoussa":
+                _roulyoSprite.Play("hit");
+                break;
+        }
+    }
+    //-----------------------------------------------------------------------------
+    private string GetCurrentPerformer(int currentPerformerIdx)
+    {
+        if (currentPerformerIdx == 0)
+        {
+            return _playerManager._gamepad1SelectedPerformer.ToString();
+        }
+        else if (currentPerformerIdx == 1)
+        {
+            return _playerManager._gamepad2SelectedPerformer.ToString();
+        }
+        else
+        {
+            GD.PrintErr("currentPerformerIdx should be in [0-1]");
+            return null;
+        }
+
     }
 }

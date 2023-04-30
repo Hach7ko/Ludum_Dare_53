@@ -9,7 +9,7 @@ public partial class SelectPerformer : Node2D
     [Signal]
     public delegate void IsGameReadyToPlayEventHandler(bool isGameReadyToPlay);
     private const int SPACE_BETWEEN_GAMEPAD = 100; //px
-    enum Performers : int
+    public enum Performers : int
     {
         Roulyo = 0,
         CPU = 1,
@@ -21,8 +21,8 @@ public partial class SelectPerformer : Node2D
     private Godot.Collections.Array<Node> _gamepad2Positions;
     private Sprite2D _gamepad2;
     private int _gamepad2IndexPosition = (int)Performers.CPU; //Starting at the middle of the screen
-    private Performers _gamepad1SelectedPerformer = Performers.CPU;
-    private Performers _gamepad2SelectedPerformer = Performers.CPU;
+    public Performers _gamepad1SelectedPerformer = Performers.CPU;
+    public Performers _gamepad2SelectedPerformer = Performers.CPU;
     private bool _isGameStarted = false;
 
     public override void _Ready()
