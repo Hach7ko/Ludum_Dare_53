@@ -9,6 +9,13 @@ public partial class HUD : Control
     private bool _isGameReadyToPlay = false;
     private int _countdown = 3;
     private bool _isGameStarted = false;
+
+    //-----------------------------------------------------------------------------
+    public override void _Ready()
+    {
+        GetNode<AudioStreamPlayer>("../IdleTheme").Play();
+    }
+
     public override void _Input(InputEvent inputEvent)
     {
         if (inputEvent.IsActionPressed("confirm") && _isGameReadyToPlay && !_isGameStarted)
@@ -20,6 +27,7 @@ public partial class HUD : Control
             GetNode<Node2D>("../PerformerSelection").Hide();
             GetNode<Label>("Footer/PressToStart").Hide();
             GetNode<Label>("Header/GameTitle").Hide();
+            GetNode<AudioStreamPlayer>("../Countdown").Play();
         }
     }
     //-----------------------------------------------------------------------------
@@ -33,6 +41,8 @@ public partial class HUD : Control
             GetNode<Timer>("Main/Middle/CountdownToStart").Stop();
             GetNode<Label>("Main/Middle/Countdown").Hide();
             EmitSignal(nameof(CountdownReachedZero));
+            GetNode<AudioStreamPlayer>("../MainBeat").Play();
+            GetNode<AudioStreamPlayer>("../IdleTheme").Stop();
         }
     }
     //-----------------------------------------------------------------------------

@@ -1,4 +1,5 @@
 [gd_scene load_steps=15 format=3 uid="uid://bbr1jut0flnjc"]
+[gd_scene load_steps=15 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
 [ext_resource type="Theme" uid="uid://t2les4oqrvbt" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
@@ -8,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://biwcb6pdcjcl1" path="res://assets/gamepad.png" id="4_plkmf"]
 [ext_resource type="PackedScene" uid="uid://dplc7nu0uhmil" path="res://BattleOrchestrator.tscn" id="5_xlc77"]
 [ext_resource type="AudioStream" uid="uid://b06woaien0e7b" path="res://assets/sounds/ld53beat.ogg" id="6_3j7yh"]
+[ext_resource type="AudioStream" uid="uid://dkx41bwwvkeu0" path="res://assets/sounds/idletheme.ogg" id="6_62g4y"]
+[ext_resource type="AudioStream" uid="uid://bmvcaj4mvsg8i" path="res://assets/sounds/countdownhorn.ogg" id="7_qkvhb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2glp4"]
 size = Vector2(128, 128)
@@ -282,9 +285,18 @@ libraries = {
 "": SubResource("AnimationLibrary_c534j")
 }
 
+[node name="BattleOrchestrator" parent="." instance=ExtResource("5_xlc77")]
+visible = false
+
+[node name="IdleTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_62g4y")
+volume_db = -10.0
+
+[node name="Countdown" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_qkvhb")
+
 [node name="MainBeat" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_3j7yh")
-autoplay = true
 
 [connection signal="CountdownReachedZero" from="HUD" to="HUD/Main/Middle/BattleOrchestrator" method="OnCountdownReachedZero"]
 [connection signal="GameStarted" from="HUD" to="PerformerSelection" method="OnGameStarted"]

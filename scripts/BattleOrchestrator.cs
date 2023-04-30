@@ -147,7 +147,7 @@ public partial class BattleOrchestrator : Control
 
             _currentLineLength = line.Phrase.Length + maxPunchLength - PUNCH_MARK.Length;
 
-            _incomingPhraseLabel.Text = line.Phrase.ReplaceN(PUNCH_MARK, voidStr.Replace(" ", "."));
+            _incomingPhraseCtrl.GetNode<Label>("Label").Text = line.Phrase.ReplaceN(PUNCH_MARK, voidStr);
         }
 
         _dropStartTimeMs = Time.GetTicksMsec();
@@ -172,7 +172,7 @@ public partial class BattleOrchestrator : Control
 
             paddedPunchStr = paddedPunchStr.PadRight(_currentLineLength);
 
-            _incomingPunchLabel.Text = paddedPunchStr.Replace(" ", ".");
+            _incomingPunchCtrl.GetNode<Label>("Label").Text = paddedPunchStr;
 
             _punchIsDirty = false;
         }
@@ -221,7 +221,7 @@ public partial class BattleOrchestrator : Control
 
         if (_performers[0].IsTrackOver && _performers[1].IsTrackOver)
         {
-            EmitSignal(nameof(BattleEnded));
+            FinalizeBattle();
         }
         else
         {
@@ -230,10 +230,19 @@ public partial class BattleOrchestrator : Control
     }
 
     //-----------------------------------------------------------------------------
+    private void FinalizeBattle()
+    {
+        _isStarted = false;
+        EmitSignal(nameof(BattleEnded));
+        Reset();
+    }
+
+    //-----------------------------------------------------------------------------
     private void OnCountdownReachedZero()
     {
         Start();
     }
+
     //-----------------------------------------------------------------------------
     private void PlayScoreSound(int weight)
     {
