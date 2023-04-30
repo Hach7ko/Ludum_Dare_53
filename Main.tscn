@@ -214,6 +214,7 @@ visible = false
 
 [node name="IdleTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_62g4y")
+volume_db = -10.0
 
 [node name="Countdown" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_qkvhb")
