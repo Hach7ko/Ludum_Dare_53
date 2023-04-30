@@ -211,7 +211,6 @@ visible = false
 
 [connection signal="CountdownReachedZero" from="HUD" to="HUD/BattleOrchestrator" method="OnCountdownReachedZero"]
 [connection signal="GameStarted" from="HUD" to="PerformerSelection" method="OnGameStarted"]
-[connection signal="GameStarted" from="HUD" to="BattleOrchestrator" method="OnGameStarted"]
 [connection signal="timeout" from="HUD/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
 [connection signal="Gamepad1PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad1PerformerSelected"]
 [connection signal="Gamepad2PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad2PerformerSelected"]
