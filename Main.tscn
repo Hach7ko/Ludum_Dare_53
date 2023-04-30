@@ -1,19 +1,147 @@
-[gd_scene load_steps=15 format=3 uid="uid://bbr1jut0flnjc"]
-[gd_scene load_steps=15 format=3 uid="uid://bbr1jut0flnjc"]
+[gd_scene load_steps=23 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
 [ext_resource type="Theme" uid="uid://t2les4oqrvbt" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
-[ext_resource type="Texture2D" uid="uid://cb0j5x6atcj48" path="res://assets/icon.svg" id="2_w51pf"]
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
 [ext_resource type="FontFile" uid="uid://doekgfrn2i3jt" path="res://assets/fonts/aAttackGraffiti.otf" id="3_xdvi4"]
-[ext_resource type="Texture2D" uid="uid://biwcb6pdcjcl1" path="res://assets/gamepad.png" id="4_plkmf"]
+[ext_resource type="Texture2D" uid="uid://dqme225ymaoae" path="res://assets/roulyo/rap1.png" id="5_8t3vp"]
 [ext_resource type="PackedScene" uid="uid://dplc7nu0uhmil" path="res://BattleOrchestrator.tscn" id="5_xlc77"]
 [ext_resource type="AudioStream" uid="uid://b06woaien0e7b" path="res://assets/sounds/ld53beat.ogg" id="6_3j7yh"]
 [ext_resource type="AudioStream" uid="uid://dkx41bwwvkeu0" path="res://assets/sounds/idletheme.ogg" id="6_62g4y"]
+[ext_resource type="Texture2D" uid="uid://cqjpepoj2uim7" path="res://assets/roulyo/rap2.png" id="6_p7eim"]
 [ext_resource type="AudioStream" uid="uid://bmvcaj4mvsg8i" path="res://assets/sounds/countdownhorn.ogg" id="7_qkvhb"]
+[ext_resource type="Texture2D" uid="uid://dt7bj4cerp5as" path="res://assets/samoussa/idle1.png" id="8_exyr8"]
+[ext_resource type="Texture2D" uid="uid://dxqvo4wvcb1u3" path="res://assets/samoussa/idle2.png" id="9_16asc"]
+[ext_resource type="Texture2D" uid="uid://bqxa71l8t58of" path="res://assets/micro.png" id="11_0goy0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ytaqa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_8t3vp")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_8t3vp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_p7eim")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_8t3vp")
+}],
+"loop": true,
+"name": &"loss",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_8t3vp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_p7eim")
+}],
+"loop": true,
+"name": &"rap",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_8t3vp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_p7eim")
+}],
+"loop": true,
+"name": &"taunt",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_8t3vp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_p7eim")
+}],
+"loop": true,
+"name": &"victory",
+"speed": 2.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2glp4"]
 size = Vector2(128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kx1r7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_exyr8")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_exyr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_16asc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_exyr8")
+}],
+"loop": true,
+"name": &"loss",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_exyr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_16asc")
+}],
+"loop": true,
+"name": &"rap",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_exyr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_16asc")
+}],
+"loop": true,
+"name": &"taunt",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_exyr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_16asc")
+}],
+"loop": true,
+"name": &"victory",
+"speed": 2.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h60i4"]
 size = Vector2(128, 128)
@@ -43,6 +171,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HUD/Footer/PressToStart:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_gc5e4"]
@@ -75,9 +215,26 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_b7ajb"]
+resource_name = "press_start_blinking"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HUD/Footer/PressToStart:self_modulate")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c534j"]
 _data = {
 "RESET": SubResource("Animation_82ua5"),
+"press_start_blinking": SubResource("Animation_b7ajb"),
 "shake_gamepad1": SubResource("Animation_gc5e4"),
 "shake_gamepad2": SubResource("Animation_3pv38")
 }
@@ -107,6 +264,7 @@ layout_mode = 2
 size_flags_horizontal = 2
 
 [node name="Gamepad1Peformer" type="Label" parent="HUD/Header/Gamepad1"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_fixqy")
@@ -121,8 +279,9 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="Gamepad1" type="Sprite2D" parent="HUD/Header/Gamepad1/Control"]
+self_modulate = Color(0, 0.709804, 1, 1)
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("4_plkmf")
+texture = ExtResource("11_0goy0")
 centered = false
 
 [node name="Score" type="Label" parent="HUD/Header/Gamepad1"]
@@ -148,6 +307,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 
 [node name="Gamepad2Peformer" type="Label" parent="HUD/Header/Gamepad2"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 8
@@ -163,9 +323,9 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="Gamepad2" type="Sprite2D" parent="HUD/Header/Gamepad2/Control"]
-modulate = Color(0.207843, 0.866667, 1, 1)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("4_plkmf")
+modulate = Color(0.945098, 0.290196, 1, 1)
+scale = Vector2(0.0847111, 0.1)
+texture = ExtResource("11_0goy0")
 centered = false
 
 [node name="Score" type="Label" parent="HUD/Header/Gamepad2"]
@@ -194,13 +354,33 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="Roulyo" type="Sprite2D" parent="HUD/Main/Left/Performer"]
-modulate = Color(0, 0.623529, 0.552941, 1)
-texture = ExtResource("2_w51pf")
+[node name="VictoryOrDefeat" type="Label" parent="HUD/Main/Left/Performer"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -141.5
+offset_top = -130.0
+offset_right = 141.5
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme = ExtResource("2_fixqy")
+text = "VICTORY OR DEFEAT?"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="HUD/Main/Left/Performer/Roulyo"]
+[node name="Roulyo" type="Area2D" parent="HUD/Main/Left/Performer"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Left/Performer/Roulyo/AnimatableBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD/Main/Left/Performer/Roulyo"]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_ytaqa")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Left/Performer/Roulyo"]
 shape = SubResource("RectangleShape2D_2glp4")
 
 [node name="Roulyo" type="Marker2D" parent="HUD/Main/Left/Performer/Roulyo" groups=["Gamepad1Position", "Gamepad2Position"]]
@@ -230,6 +410,31 @@ text = "3"
 
 [node name="P2Unselected" type="Marker2D" parent="HUD/Main/Middle" groups=["Gamepad2Position"]]
 
+[node name="EndGameButton" type="VBoxContainer" parent="HUD/Main/Middle"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme = ExtResource("2_fixqy")
+
+[node name="Retry" type="Button" parent="HUD/Main/Middle/EndGameButton"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("2_fixqy")
+text = "Retry"
+
+[node name="Select a new performer" type="Button" parent="HUD/Main/Middle/EndGameButton"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("2_fixqy")
+text = "Select Performer"
+
+[node name="Quit" type="Button" parent="HUD/Main/Middle/EndGameButton"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("2_fixqy")
+text = "Quit"
+
 [node name="Right" type="VBoxContainer" parent="HUD/Main"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -239,13 +444,33 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="Samoussa" type="Sprite2D" parent="HUD/Main/Right/Performer"]
-modulate = Color(0.517647, 0.0235294, 0.666667, 1)
-texture = ExtResource("2_w51pf")
+[node name="VictoryOrDefeat" type="Label" parent="HUD/Main/Right/Performer"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -141.5
+offset_top = -130.0
+offset_right = 141.5
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme = ExtResource("2_fixqy")
+text = "VICTORY OR DEFEAT?"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="HUD/Main/Right/Performer/Samoussa"]
+[node name="Samoussa" type="Area2D" parent="HUD/Main/Right/Performer"]
+scale = Vector2(0.5, 0.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Right/Performer/Samoussa/AnimatableBody2D"]
+[node name="AnimatableBody2D" type="AnimatedSprite2D" parent="HUD/Main/Right/Performer/Samoussa"]
+sprite_frames = SubResource("SpriteFrames_kx1r7")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Right/Performer/Samoussa"]
 shape = SubResource("RectangleShape2D_h60i4")
 
 [node name="Samoussa" type="Marker2D" parent="HUD/Main/Right/Performer/Samoussa" groups=["Gamepad1Position", "Gamepad2Position"]]
@@ -265,20 +490,20 @@ metadata/_edit_use_anchors_ = true
 visible = false
 layout_mode = 2
 theme = ExtResource("2_fixqy")
-text = "Ready for battle?
-Press space to start!"
+text = "Press space to start!"
 
 [node name="PerformerSelection" type="Node2D" parent="."]
 script = ExtResource("3_g410e")
 
 [node name="Gamepad1" type="Sprite2D" parent="PerformerSelection"]
-scale = Vector2(0.240745, 0.25)
-texture = ExtResource("4_plkmf")
+self_modulate = Color(0, 0.709804, 1, 1)
+scale = Vector2(0.12, 0.124)
+texture = ExtResource("11_0goy0")
 
 [node name="Gamepad2" type="Sprite2D" parent="PerformerSelection"]
-modulate = Color(0.207843, 0.866667, 1, 1)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("4_plkmf")
+self_modulate = Color(0.945098, 0.290196, 1, 1)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("11_0goy0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -300,8 +525,12 @@ stream = ExtResource("6_3j7yh")
 
 [connection signal="CountdownReachedZero" from="HUD" to="HUD/Main/Middle/BattleOrchestrator" method="OnCountdownReachedZero"]
 [connection signal="GameStarted" from="HUD" to="PerformerSelection" method="OnGameStarted"]
+[connection signal="BattleEnded" from="HUD/Main/Middle/BattleOrchestrator" to="HUD" method="OnBattleEnded"]
 [connection signal="UpdateScore" from="HUD/Main/Middle/BattleOrchestrator" to="HUD" method="OnUpdateScore"]
 [connection signal="timeout" from="HUD/Main/Middle/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
+[connection signal="pressed" from="HUD/Main/Middle/EndGameButton/Retry" to="HUD" method="OnRetryPressed"]
+[connection signal="pressed" from="HUD/Main/Middle/EndGameButton/Select a new performer" to="HUD" method="OnSelectPerformerPressed"]
+[connection signal="pressed" from="HUD/Main/Middle/EndGameButton/Quit" to="HUD" method="OnQuitPressed"]
 [connection signal="Gamepad1PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad1PerformerSelected"]
 [connection signal="Gamepad2PerformerSelected" from="PerformerSelection" to="HUD" method="OnGamepad2PerformerSelected"]
 [connection signal="IsGameReadyToPlay" from="PerformerSelection" to="HUD" method="OnIsGameReadyToPlay"]

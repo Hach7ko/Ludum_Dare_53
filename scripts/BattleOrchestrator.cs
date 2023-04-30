@@ -13,7 +13,7 @@ public partial class BattleOrchestrator : Control
 {
     // SIGNAL
     [Signal]
-    public delegate void BattleEndedEventHandler();
+    public delegate void BattleEndedEventHandler(int winner);
     [Signal]
     public delegate void UpdateScoreEventHandler(string performer1, string performer2);
     // LOGIC
@@ -75,7 +75,6 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     public string GetScoreForPlayer(uint playerIdx)
     {
-        GD.Print(playerIdx);
         if (playerIdx != 1 && playerIdx != 2)
         {
             GD.PrintErr("playerIdx should be in [1-2]");
@@ -119,6 +118,7 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     private void Start()
     {
+        Reset();
         _isStarted = true;
         _currentPerformerIdx = 0;
         _currentLineIdx = 0;
@@ -147,7 +147,7 @@ public partial class BattleOrchestrator : Control
 
             _currentLineLength = line.Phrase.Length + maxPunchLength - PUNCH_MARK.Length;
 
-            _incomingPhraseCtrl.GetNode<Label>("Label").Text = line.Phrase.ReplaceN(PUNCH_MARK, voidStr);
+            _incomingPhraseLabel.Text = line.Phrase.ReplaceN(PUNCH_MARK, voidStr);
         }
 
         _dropStartTimeMs = Time.GetTicksMsec();
@@ -172,7 +172,7 @@ public partial class BattleOrchestrator : Control
 
             paddedPunchStr = paddedPunchStr.PadRight(_currentLineLength);
 
-            _incomingPunchCtrl.GetNode<Label>("Label").Text = paddedPunchStr;
+            _incomingPunchLabel.Text = paddedPunchStr;
 
             _punchIsDirty = false;
         }
@@ -232,9 +232,24 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     private void FinalizeBattle()
     {
+        if (GetScoreForPlayer(1) != GetScoreForPlayer(2))
+        {
+            if (GetScoreForPlayer(1).ToInt() > GetScoreForPlayer(2).ToInt())
+            {
+                EmitSignal(nameof(BattleEnded), 1);
+            }
+            else
+            {
+                EmitSignal(nameof(BattleEnded), 2);
+            }
+        }
+        else if (GetScoreForPlayer(1).ToInt() == GetScoreForPlayer(2).ToInt())
+        {
+            EmitSignal(nameof(BattleEnded), 0);
+        }
+
         _isStarted = false;
-        EmitSignal(nameof(BattleEnded));
-        Reset();
+        Hide();
     }
 
     //-----------------------------------------------------------------------------
