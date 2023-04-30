@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://bbr1jut0flnjc"]
+[gd_scene load_steps=13 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
 [ext_resource type="Texture2D" uid="uid://cb0j5x6atcj48" path="res://assets/icon.svg" id="2_w51pf"]
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
 [ext_resource type="Texture2D" uid="uid://biwcb6pdcjcl1" path="res://assets/gamepad.png" id="4_plkmf"]
 [ext_resource type="PackedScene" uid="uid://dplc7nu0uhmil" path="res://BattleOrchestrator.tscn" id="5_xlc77"]
+[ext_resource type="AudioStream" uid="uid://b06woaien0e7b" path="res://assets/sounds/ld53beat.ogg" id="6_3j7yh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2glp4"]
 size = Vector2(128, 128)
@@ -208,6 +209,10 @@ libraries = {
 
 [node name="BattleOrchestrator" parent="." instance=ExtResource("5_xlc77")]
 visible = false
+
+[node name="MainBeat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_3j7yh")
+autoplay = true
 
 [connection signal="CountdownReachedZero" from="HUD" to="HUD/BattleOrchestrator" method="OnCountdownReachedZero"]
 [connection signal="GameStarted" from="HUD" to="PerformerSelection" method="OnGameStarted"]

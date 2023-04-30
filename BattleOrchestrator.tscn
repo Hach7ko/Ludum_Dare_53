@@ -110,9 +110,12 @@ stream = ExtResource("4_ybs88")
 
 [node name="Boo" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_n43sr")
+volume_db = -20.0
 
 [node name="Clapping" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ceubh")
+volume_db = -20.0
 
 [node name="Yeah" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_tagtc")
+volume_db = -20.0
