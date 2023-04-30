@@ -22,90 +22,99 @@ public partial class SelectPerformer : Node2D
 	private int 						  _gamepad2IndexPosition = (int)Performers.CPU; //Starting at the middle of the screen
     private Performers 					  _gamepad1SelectedPerformer = Performers.CPU;
 	private Performers 					  _gamepad2SelectedPerformer = Performers.CPU;
+	private bool						  _isGameStarted = false;
     public override void _Ready()
     {
         _gamepad1Positions = GetTree().GetNodesInGroup("Gamepad1Position");
 		_gamepad2Positions = GetTree().GetNodesInGroup("Gamepad2Position");
 
 		_gamepad1 = GetNode<Sprite2D>("Gamepad1");
-        _gamepad1.Position = (_gamepad1Positions[_gamepad1IndexPosition] as Marker2D).Position;
+        _gamepad1.Position = (_gamepad1Positions[(int)Performers.CPU] as Marker2D).Position;
 
         _gamepad2 = GetNode<Sprite2D>("Gamepad2");
-		_gamepad2.Position = (_gamepad2Positions[_gamepad2IndexPosition] as Marker2D).Position;
+		_gamepad2.Position = (_gamepad2Positions[(int)Performers.CPU] as Marker2D).Position;
     }
 //-----------------------------------------------------------------------------
     public override void _PhysicsProcess(double delta)
 	{
-        //We can add later linear interpolation to make it move smoothly
-        if (Input.IsActionJustPressed("left_gamepad1"))
+		if (!_isGameStarted)
 		{
-            int currentIndex = _gamepad1IndexPosition == 0 ? 0 : --_gamepad1IndexPosition;
-			if (currentIndex == 0)
+			//We can add later linear interpolation to make it move smoothly
+			if (Input.IsActionJustPressed("left_gamepad1"))
 			{
-				//Player is already selected, play the shake animation
-				if (_gamepad2SelectedPerformer == Performers.Roulyo)
+				int currentIndex = _gamepad1IndexPosition == 0 ? 0 : --_gamepad1IndexPosition;
+                GD.Print(currentIndex);
+                if (currentIndex == 0) 
 				{
-					GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad1");
-				} else if (_gamepad2SelectedPerformer != Performers.Roulyo)
-				{
-					OnGamepad1PerformerSelected(Performers.Roulyo, currentIndex);
-				}
-			} else {
-                SelectCPUForGamepad("gamepad1");
-            }
-        }
-		if (Input.IsActionJustPressed("right_gamepad1"))
-		{
-			int currentIndex = _gamepad1IndexPosition == _gamepad1Positions.Count - 1 ? _gamepad1Positions.Count - 1 : ++_gamepad1IndexPosition;
-			if (_gamepad1IndexPosition == _gamepad1Positions.Count - 1)
+					//Player is already selected, play the shake animation and reset index
+					if (_gamepad2SelectedPerformer == Performers.Roulyo)
+					{
+                        _gamepad1IndexPosition = (int)Performers.CPU;
+                        GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad1");
+					} else if (_gamepad2SelectedPerformer != Performers.Roulyo)
+					{
+						OnGamepad1PerformerSelected(Performers.Roulyo, currentIndex);
+					}
+				} else {
+					SelectCPUForGamepad("gamepad1");
+				}			
+			}
+			if (Input.IsActionJustPressed("right_gamepad1"))
 			{
-				//Player is already selected, play the shake animation
-				if (_gamepad2SelectedPerformer == Performers.Samoussa)
+				int currentIndex = _gamepad1IndexPosition == _gamepad1Positions.Count - 1 ? _gamepad1Positions.Count - 1 : ++_gamepad1IndexPosition;
+				if (_gamepad1IndexPosition == _gamepad1Positions.Count - 1)
 				{
-					GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad1");
-				} else if (_gamepad2SelectedPerformer != Performers.Samoussa)
-				{
-					OnGamepad1PerformerSelected(Performers.Samoussa, currentIndex);
+					//Player is already selected, play the shake animation
+					if (_gamepad2SelectedPerformer == Performers.Samoussa)
+					{
+						_gamepad1IndexPosition = (int)Performers.CPU;
+						GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad1");
+					} else if (_gamepad2SelectedPerformer != Performers.Samoussa)
+					{
+						OnGamepad1PerformerSelected(Performers.Samoussa, currentIndex);
+					}
+				} else {
+					SelectCPUForGamepad("gamepad1");
 				}
-			} else {
-				SelectCPUForGamepad("gamepad1");
+			}
+			if (Input.IsActionJustPressed("left_gamepad2"))
+			{
+				int currentIndex = _gamepad2IndexPosition == 0 ? 0 : --_gamepad2IndexPosition;
+				if (_gamepad2IndexPosition == 0)
+				{
+					//Player is already selected, play the shake animation
+					if (_gamepad1SelectedPerformer == Performers.Roulyo)
+					{
+						_gamepad2IndexPosition = (int)Performers.CPU;
+						GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad2");
+					} else if (_gamepad1SelectedPerformer != Performers.Roulyo)
+					{
+						OnGamepad2PerformerSelected(Performers.Roulyo, currentIndex);
+					}
+				} else {
+					SelectCPUForGamepad("gamepad2");
+				}
+			}
+			if (Input.IsActionJustPressed("right_gamepad2"))
+			{
+				int currentIndex = _gamepad2IndexPosition == _gamepad2Positions.Count - 1 ? _gamepad2Positions.Count - 1 : ++_gamepad2IndexPosition;
+				if (_gamepad2IndexPosition == _gamepad2Positions.Count - 1)
+				{
+					//Player is already selected, play the shake animation
+					if (_gamepad1SelectedPerformer == Performers.Samoussa)
+					{
+						_gamepad2IndexPosition = (int)Performers.CPU;
+						GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad2");
+					} else if (_gamepad1SelectedPerformer != Performers.Samoussa)
+					{
+						OnGamepad2PerformerSelected(Performers.Samoussa, currentIndex);
+					}
+				} else {
+					SelectCPUForGamepad("gamepad2");
+				}
 			}
 		}
-		if (Input.IsActionJustPressed("left_gamepad2"))
-		{
-			int currentIndex = _gamepad2IndexPosition == 0 ? 0 : --_gamepad2IndexPosition;
-			if (_gamepad2IndexPosition == 0)
-			{
-				//Player is already selected, play the shake animation
-				if (_gamepad1SelectedPerformer == Performers.Roulyo)
-				{
-					GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad2");
-				} else if (_gamepad1SelectedPerformer != Performers.Roulyo)
-				{
-					OnGamepad2PerformerSelected(Performers.Roulyo, currentIndex);
-				}
-			} else {
-				SelectCPUForGamepad("gamepad2");
-			}
-		}
-		if (Input.IsActionJustPressed("right_gamepad2"))
-		{
-			int currentIndex = _gamepad2IndexPosition == _gamepad2Positions.Count - 1 ? _gamepad2Positions.Count - 1 : ++_gamepad2IndexPosition;
-			if (_gamepad2IndexPosition == _gamepad2Positions.Count - 1)
-			{
-				//Player is already selected, play the shake animation
-				if (_gamepad1SelectedPerformer == Performers.Samoussa)
-				{
-					GetNode<AnimationPlayer>("../AnimationPlayer").Play("shake_gamepad2");
-				} else if (_gamepad1SelectedPerformer != Performers.Samoussa)
-				{
-					OnGamepad2PerformerSelected(Performers.Samoussa, currentIndex);
-				}
-			} else {
-                SelectCPUForGamepad("gamepad2");
-            }
-		}
-	}
+    }
 //-----------------------------------------------------------------------------
 	public bool IsGamepadCPUBound(int gpadIdx)
 	{
@@ -145,12 +154,12 @@ public partial class SelectPerformer : Node2D
 //-----------------------------------------------------------------------------
     private void OnIsGameReadyToPlay()
     {
-        if (_gamepad1SelectedPerformer != Performers.CPU || _gamepad2SelectedPerformer != Performers.CPU)
-		{
-            EmitSignal(nameof(IsGameReadyToPlay), true);
-        } else
-		{
-			EmitSignal(nameof(IsGameReadyToPlay), false);
-		}
+        bool _isGameReadyToPlay = (_gamepad1SelectedPerformer != Performers.CPU || _gamepad2SelectedPerformer != Performers.CPU) ? true : false;
+		EmitSignal(nameof(IsGameReadyToPlay), _isGameReadyToPlay);
+    }
+//-----------------------------------------------------------------------------
+	private void OnGameStarted()
+	{
+        _isGameStarted = true;
     }
 }
