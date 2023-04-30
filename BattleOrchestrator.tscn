@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://dplc7nu0uhmil"]
 
 [ext_resource type="Script" path="res://scripts/BattleOrchestrator.cs" id="1_il46s"]
-[ext_resource type="Theme" path="res://assets/LabelContainerTheme.tres" id="2_bjb0y"]
-[ext_resource type="Theme" path="res://assets/LyricsLabelTheme.tres" id="3_euh07"]
+[ext_resource type="Theme" uid="uid://dkda5wmy5pmwj" path="res://assets/LabelContainerTheme.tres" id="2_bjb0y"]
+[ext_resource type="Theme" uid="uid://dfssr6q3mq1d7" path="res://assets/LyricsLabelTheme.tres" id="3_euh07"]
 [ext_resource type="AudioStream" uid="uid://bg21b2tdkyykj" path="res://assets/sounds/scribble-roulyo.mp3" id="4_wiuor"]
 [ext_resource type="AudioStream" uid="uid://gx1g8fr7nol3" path="res://assets/sounds/scribble-samoussa.mp3" id="4_ybs88"]
 [ext_resource type="AudioStream" uid="uid://7krlpftyd767" path="res://assets/sounds/boo.mp3" id="6_n43sr"]
