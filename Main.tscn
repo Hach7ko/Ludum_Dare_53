@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bbr1jut0flnjc"]
+[gd_scene load_steps=39 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
 [ext_resource type="Theme" uid="uid://t2les4oqrvbt" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
@@ -21,6 +21,14 @@
 [ext_resource type="Texture2D" uid="uid://biiv2033a6tpv" path="res://assets/roulyo/taunt2.png" id="12_a2381"]
 [ext_resource type="Texture2D" uid="uid://4c6dp0bjtmbk" path="res://assets/roulyo/win1.png" id="13_kitep"]
 [ext_resource type="Texture2D" uid="uid://dxxiv8y4bqej8" path="res://assets/roulyo/win2.png" id="14_cd1gw"]
+[ext_resource type="Texture2D" uid="uid://fh23e6jhcuf2" path="res://assets/samoussa/hit.png" id="16_t70g1"]
+[ext_resource type="Texture2D" uid="uid://dt5hufr848lm1" path="res://assets/samoussa/lose.png" id="19_fbhqd"]
+[ext_resource type="Texture2D" uid="uid://bpnocj20djakm" path="res://assets/samoussa/rap1.png" id="20_rr3kk"]
+[ext_resource type="Texture2D" uid="uid://ciroc7y16xg8e" path="res://assets/samoussa/rap2.png" id="21_3kejr"]
+[ext_resource type="Texture2D" uid="uid://dc13xqf4d3tan" path="res://assets/samoussa/taunt1.png" id="22_5mot3"]
+[ext_resource type="Texture2D" uid="uid://b78ltvdm5qb8d" path="res://assets/samoussa/taunt2.png" id="23_cihvq"]
+[ext_resource type="Texture2D" uid="uid://c3oqhb76uarue" path="res://assets/samoussa/win1.png" id="24_hb1ik"]
+[ext_resource type="Texture2D" uid="uid://c0v6yfo33wbac" path="res://assets/samoussa/win2.png" id="25_xipql"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ytaqa"]
 animations = [{
@@ -92,7 +100,7 @@ size = Vector2(128, 128)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_exyr8")
+"texture": ExtResource("16_t70g1")
 }],
 "loop": true,
 "name": &"hit",
@@ -111,7 +119,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_exyr8")
+"texture": ExtResource("19_fbhqd")
 }],
 "loop": true,
 "name": &"loss",
@@ -119,10 +127,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_exyr8")
+"texture": ExtResource("20_rr3kk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_16asc")
+"texture": ExtResource("21_3kejr")
 }],
 "loop": true,
 "name": &"rap",
@@ -130,10 +138,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_exyr8")
+"texture": ExtResource("22_5mot3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_16asc")
+"texture": ExtResource("23_cihvq")
 }],
 "loop": true,
 "name": &"taunt",
@@ -141,10 +149,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_exyr8")
+"texture": ExtResource("24_hb1ik")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_16asc")
+"texture": ExtResource("25_xipql")
 }],
 "loop": true,
 "name": &"victory",
@@ -368,7 +376,7 @@ size_flags_vertical = 6
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ytaqa")
 animation = &"loss"
-frame_progress = 0.873246
+frame_progress = 0.622098
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Left/Performer/Roulyo"]
 shape = SubResource("RectangleShape2D_2glp4")
@@ -448,10 +456,10 @@ size_flags_vertical = 6
 [node name="Samoussa" type="Area2D" parent="HUD/Main/Right/Performer"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD/Main/Right/Performer/Samoussa"]
-scale = Vector2(0.6, 0.6)
+scale = Vector2(0.6, 0.594655)
 sprite_frames = SubResource("SpriteFrames_kx1r7")
 animation = &"idle"
-frame_progress = 0.327808
+frame_progress = 0.364017
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Right/Performer/Samoussa"]
 shape = SubResource("RectangleShape2D_h60i4")
