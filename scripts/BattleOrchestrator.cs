@@ -58,6 +58,7 @@ public partial class BattleOrchestrator : Control
         _samoussaSprite = GetNode<AnimatedSprite2D>("/root/MainNode/HUD/Main/Right/Performer/Samoussa/AnimatedSprite2D");
 
         Reset();
+        ResetScore();
     }
 
     //-----------------------------------------------------------------------------
@@ -128,15 +129,18 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     private void Reset()
     {
-        _performers[0].Score = 0;
-        _performers[1].Score = 0;
-
         _incomingPunchLabel.Text = "";
         _incomingPhraseLabel.Text = "";
         _verseCtrl.GetNode<Label>("0").Text = "";
         _verseCtrl.GetNode<Label>("1").Text = "";
         _verseCtrl.GetNode<Label>("2").Text = "";
         _verseCtrl.GetNode<Label>("3").Text = "";
+    }
+    //-----------------------------------------------------------------------------
+    private void ResetScore()
+    {
+        _performers[0].Score = 0;
+        _performers[1].Score = 0;
     }
 
     //-----------------------------------------------------------------------------
@@ -146,6 +150,7 @@ public partial class BattleOrchestrator : Control
         _samoussaSprite.Play("rap");
 
         Reset();
+        ResetScore();
 
         _isStarted = true;
         _currentPerformerIdx = 0;
@@ -240,7 +245,6 @@ public partial class BattleOrchestrator : Control
         if (_currentLineIdx == 0) // we looped
         {
             _currentPerformerIdx = StaticTools.nimod(_currentPerformerIdx + 1, 2);
-            //TODO: Maybe not a good reset?
             Reset();
         }
         else

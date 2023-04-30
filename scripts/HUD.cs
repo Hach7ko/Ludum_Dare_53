@@ -12,12 +12,17 @@ public partial class HUD : Control
     private bool _isGameStarted = false;
     private AnimatedSprite2D _roulyoSprite;
     private AnimatedSprite2D _samoussaSprite;
+    private SelectPerformer _playerManager = null;
+    private BattleOrchestrator _battleOrchestrator = null;
 
 
     //-----------------------------------------------------------------------------
     public override void _Ready()
     {
         GetNode<AudioStreamPlayer>("../IdleTheme").Play();
+
+        _playerManager = GetNode<SelectPerformer>("/root/MainNode/PerformerSelection");
+        _battleOrchestrator = GetNode<BattleOrchestrator>("Main/Middle/BattleOrchestrator");
 
         _roulyoSprite = GetNode<AnimatedSprite2D>("Main/Left/Performer/Roulyo/AnimatedSprite2D");
         _roulyoSprite.Play("idle");
@@ -104,29 +109,31 @@ public partial class HUD : Control
     //-----------------------------------------------------------------------------
     private void DisplayWinner()
     {
-        int winner = 0;
-        //TODO: FIX weird results sometimes
-        switch (winner)
-        {
-            case 0:
-                _roulyoSprite.Play("victory");
-                _samoussaSprite.Play("victory");
-                GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Winner!";
-                GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Winner!";
-                break;
-            case 1:
-                _roulyoSprite.Play("loss");
-                _samoussaSprite.Play("victory");
-                GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Loser!";
-                GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Winner!";
-                break;
-            case 2:
-                _roulyoSprite.Play("victory");
-                _samoussaSprite.Play("loss");
-                GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Winner!";
-                GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Loser!";
-                break;
+        int roulyoScore = _battleOrchestrator.GetScoreForPlayer(1).ToInt();
+        int samoussaScore = _battleOrchestrator.GetScoreForPlayer(2).ToInt();
 
+        GD.Print("roulyo score: " + roulyoScore + " samoussa score: " + samoussaScore);
+
+        if (roulyoScore == samoussaScore)
+        {
+            _roulyoSprite.Play("victory");
+            _samoussaSprite.Play("victory");
+            GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Winner!";
+            GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Winner!";
+        }
+        else if (roulyoScore > samoussaScore)
+        {
+            _roulyoSprite.Play("victory");
+            _samoussaSprite.Play("loss");
+            GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Winner!";
+            GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Loser!";
+        }
+        else if (roulyoScore < samoussaScore)
+        {
+            _roulyoSprite.Play("loss");
+            _samoussaSprite.Play("victory");
+            GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Loser!";
+            GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Winner!";
         }
 
         GetNode<Label>("Main/Left/VictoryOrDefeat").Show();
