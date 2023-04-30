@@ -156,6 +156,9 @@ public partial class BattleOrchestrator : Control
         _currentPerformerIdx = 0;
         _currentLineIdx = 0;
 
+        _performers[0].RestartTrack();
+        _performers[1].RestartTrack();
+
         SetDropZone(_performers[_currentPerformerIdx].GetCurrentLine());
 
         Show();

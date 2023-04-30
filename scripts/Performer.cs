@@ -39,6 +39,14 @@ public partial class Performer
     }
 
 //-----------------------------------------------------------------------------
+    public void RestartTrack()
+    {
+        _currentLine = 0;
+        _currentVerse = 0;
+        IsTrackOver = false;
+    }
+
+//-----------------------------------------------------------------------------
     public void PrintTrack()
     {
         string trackStr = new string("");
