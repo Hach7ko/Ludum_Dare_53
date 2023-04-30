@@ -4,16 +4,19 @@ public partial class HUD : Control
 {
     [Signal]
     public delegate void CountdownReachedZeroEventHandler();
-
+    [Signal]
+    public delegate void GameStartedEventHandler();
     private bool _isGameReadyToPlay = false;
     private int  _countdown = 3;
     public override void _Input(InputEvent inputEvent)
     {
         if (inputEvent.IsActionPressed("confirm") && _isGameReadyToPlay)
         {
+            EmitSignal(nameof(GameStarted));
             GetNode<Label>("Countdown").Show();
             GetNode<Timer>("CountdownToStart").Start();
             GetNode<Node2D>("../PerformerSelection").Hide();
+            GetNode<Label>("PressToStart").Hide();
         }
     }
 //-----------------------------------------------------------------------------
@@ -23,6 +26,7 @@ public partial class HUD : Control
         GetNode<Label>("Countdown").Text = _countdown.ToString();
         if (_countdown == 0)
         {
+            _isGameReadyToPlay = false;
             GetNode<Timer>("CountdownToStart").Stop();
             GetNode<Label>("Countdown").Hide();
             EmitSignal(nameof(CountdownReachedZero));

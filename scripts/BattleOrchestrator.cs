@@ -196,7 +196,9 @@ public partial class BattleOrchestrator : Control
 //-----------------------------------------------------------------------------
     private void FinalizeDrop()
     {
-        _performers[_currentPerformerIdx].Score += _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Weight;
+        int weight = _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Weight;
+        _performers[_currentPerformerIdx].Score += weight;
+        PlayScoreSound(weight);
         string lineStr = _performers[_currentPerformerIdx].GetCurrentLine().Phrase;
         lineStr = lineStr.ReplaceN(PUNCH_MARK, _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Word);
 
@@ -227,5 +229,21 @@ public partial class BattleOrchestrator : Control
     private void OnCountdownReachedZero()
     {
         Start();
+    }
+//-----------------------------------------------------------------------------
+    private void PlayScoreSound(int weight)
+    {
+        switch(weight) 
+        {
+            case 0:
+                GetNode<AudioStreamPlayer>("Boo").Play();
+                break;
+            case 1:
+                GetNode<AudioStreamPlayer>("Clapping").Play();
+                break;
+            case 2:
+                GetNode<AudioStreamPlayer>("Yeah").Play();
+            break;
+        }
     }
 }
