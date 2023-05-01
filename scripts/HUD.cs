@@ -146,12 +146,12 @@ public partial class HUD : Control
         int roulyoGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Roulyo);
         int samoussaGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Samoussa);
 
-        if (roulyoGpad != 0)
+        if (roulyoGpad != Config.CPU_CONTROLLER_ID)
         {
             GetNode<Label>("Header/Gamepad" + roulyoGpad.ToString() + "/Score").Text = roulyoScore;
             GetNode<Label>("Header/Gamepad" + GetOppositePad(roulyoGpad).ToString() + "/Score").Text = samoussaScore;
         }
-        else if (samoussaGpad != 0)
+        else if (samoussaGpad != Config.CPU_CONTROLLER_ID)
         {
             GetNode<Label>("Header/Gamepad" +  GetOppositePad(samoussaGpad).ToString() + "/Score").Text = roulyoScore;
             GetNode<Label>("Header/Gamepad" + samoussaGpad.ToString() + "/Score").Text = samoussaScore;
@@ -163,11 +163,18 @@ public partial class HUD : Control
     //-----------------------------------------------------------------------------
     private int GetOppositePad(int padIdx)
     {
-        if (padIdx == 1)
-            return 2;
-        if (padIdx == 2)
-            return 1;
-        return 0;
+        if (padIdx == Config.GPAD1_CONTROLLER_ID)
+        {
+            return Config.GPAD2_CONTROLLER_ID;
+        }
+        else if (padIdx == Config.GPAD2_CONTROLLER_ID)
+        {
+            return Config.GPAD1_CONTROLLER_ID;
+        }
+        else
+        {
+            return Config.CPU_CONTROLLER_ID;
+        }
     }
     //-----------------------------------------------------------------------------
     private void OnRetryPressed()

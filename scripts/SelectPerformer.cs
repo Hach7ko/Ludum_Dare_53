@@ -1,5 +1,15 @@
 using Godot;
 
+public partial class Config
+{
+
+    public const int ROULYO_PERFORMER_ID = 0;
+    public const int SAMOUSSA_PERFORMER_ID = 1;
+    public const int CPU_CONTROLLER_ID = 0;
+    public const int GPAD1_CONTROLLER_ID = 1;
+    public const int GPAD2_CONTROLLER_ID = 2;
+}
+
 public partial class SelectPerformer : Node2D
 {
     [Signal]
@@ -132,23 +142,23 @@ public partial class SelectPerformer : Node2D
     //-----------------------------------------------------------------------------
     public bool IsGamepadCPUBound(int gpadIdx)
     {
-        return (gpadIdx == 1 && _gamepad1SelectedPerformer == Performers.CPU)
-            || (gpadIdx == 2 && _gamepad2SelectedPerformer == Performers.CPU);
+        return (gpadIdx == Config.GPAD1_CONTROLLER_ID && _gamepad1SelectedPerformer == Performers.CPU)
+            || (gpadIdx == Config.GPAD2_CONTROLLER_ID && _gamepad2SelectedPerformer == Performers.CPU);
     }
     //-----------------------------------------------------------------------------
     public int GetGamepadForPerformer(Performers performer)
     {
         if (_gamepad1SelectedPerformer == performer)
         {
-            return 1;
+            return Config.GPAD1_CONTROLLER_ID;
         }
         else if (_gamepad2SelectedPerformer == performer)
         {
-            return 2;
+            return Config.GPAD2_CONTROLLER_ID;
         }
         else
         {
-            return 0;
+            return Config.CPU_CONTROLLER_ID;
         }
     }
     //-----------------------------------------------------------------------------
