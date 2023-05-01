@@ -136,6 +136,22 @@ public partial class SelectPerformer : Node2D
             || (gpadIdx == 2 && _gamepad2SelectedPerformer == Performers.CPU);
     }
     //-----------------------------------------------------------------------------
+    public int GetGamepadForPerformer(Performers performer)
+    {
+        if (_gamepad1SelectedPerformer == performer)
+        {
+            return 1;
+        }
+        else if (_gamepad2SelectedPerformer == performer)
+        {
+            return 2;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    //-----------------------------------------------------------------------------
     private void SelectCPUForGamepad(string gamepad)
     {
         if (gamepad == "gamepad1")

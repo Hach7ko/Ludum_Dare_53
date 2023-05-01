@@ -67,17 +67,21 @@ public partial class BattleOrchestrator : Control
         if (!_isStarted)
             return;
 
-        // gamepad index is [1-2]
-        if (_currentPerformerIdx == 0 && !_playerManager.IsGamepadCPUBound(1))
+        int roulyoGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Roulyo);
+        int samoussaGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Samoussa);
+
+        // Gpad index 0 is CPU
+        if (_currentPerformerIdx == 0 && roulyoGpad != 0)
         {
-            PlayClashingAnimation(GetCurrentPerformer(_currentPerformerIdx));
-            ProcessInput("left_gamepad1", "right_gamepad1");
+            ProcessInput("left_gamepad" + roulyoGpad.ToString(), "right_gamepad" + roulyoGpad.ToString());
         }
-        else if (_currentPerformerIdx == 1 && !_playerManager.IsGamepadCPUBound(2))
+        else if (_currentPerformerIdx == 1 && samoussaGpad != 0)
         {
-            PlayClashingAnimation(GetCurrentPerformer(_currentPerformerIdx));
-            ProcessInput("left_gamepad2", "right_gamepad2");
+            ProcessInput("left_gamepad" + samoussaGpad.ToString(), "right_gamepad" + samoussaGpad.ToString());
         }
+
+        PlayClashingAnimation(_currentPerformerIdx == 0 ? SelectPerformer.Performers.Roulyo.ToString()
+                                                        : SelectPerformer.Performers.Samoussa.ToString());
 
         UpdateDropZone();
     }
@@ -98,15 +102,15 @@ public partial class BattleOrchestrator : Control
     }
 
     //-----------------------------------------------------------------------------
-    public string GetScoreForPlayer(uint playerIdx)
+    public string GetScoreForPerformer(uint performerIdx)
     {
-        if (playerIdx != 1 && playerIdx != 2)
+        if (performerIdx != 0 && performerIdx != 1)
         {
-            GD.PrintErr("playerIdx should be in [1-2]");
+            GD.PrintErr("performerIdx should be in [0-1]");
             return null;
         }
 
-        return _performers[playerIdx - 1].Score.ToString();
+        return _performers[performerIdx].Score.ToString();
     }
 
     //-----------------------------------------------------------------------------
@@ -215,7 +219,10 @@ public partial class BattleOrchestrator : Control
 
         float dropTimeMs = BASE_DROP_TIME_MS;
 
-        if (_playerManager.IsGamepadCPUBound(_currentPerformerIdx + 1))
+        int performerGpad = _playerManager.GetGamepadForPerformer(_currentPerformerIdx == 0 ? SelectPerformer.Performers.Roulyo
+                                                                                            : SelectPerformer.Performers.Samoussa);
+
+        if (performerGpad == 0)
         {
             dropTimeMs /= 2.0f;
         }
@@ -238,7 +245,7 @@ public partial class BattleOrchestrator : Control
         int weight = _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Weight;
         _performers[_currentPerformerIdx].Score += weight;
         PlayScoreSound(weight, _currentPerformerIdx);
-        EmitSignal(nameof(UpdateScore), GetScoreForPlayer(1), GetScoreForPlayer(2));
+        EmitSignal(nameof(UpdateScore), GetScoreForPerformer(0), GetScoreForPerformer(1));
         string lineStr = _performers[_currentPerformerIdx].GetCurrentLine().Phrase;
         lineStr = lineStr.ReplaceN(PUNCH_MARK, _performers[_currentPerformerIdx].GetCurrentLine().Punches[_currentPunchIdx].Word);
 
@@ -292,20 +299,20 @@ public partial class BattleOrchestrator : Control
                 break;
             case 2:
                 GetNode<AudioStreamPlayer>("Yeah").Play();
-                PlayHitAnimations(currentPerformerIdx);
+                PlayHitAnimations(GetPerformerOpponent(currentPerformerIdx));
                 break;
         }
     }
     //-----------------------------------------------------------------------------
-    private void PlayHitAnimations(int currentPerformerIdx)
+    private void PlayHitAnimations(int targetIdx)
     {
-        switch (GetCurrentPerformer(currentPerformerIdx))
+        switch (targetIdx)
         {
-            case "Roulyo":
-                _samoussaSprite.Play("hit");
-                break;
-            case "Samoussa":
+            case 0:
                 _roulyoSprite.Play("hit");
+                break;
+            case 1:
+                _samoussaSprite.Play("hit");
                 break;
         }
     }
@@ -326,5 +333,14 @@ public partial class BattleOrchestrator : Control
             return null;
         }
 
+    }
+    //-----------------------------------------------------------------------------
+    private int GetPerformerOpponent(int performerdx)
+    {
+        if (performerdx == 0)
+            return 1;
+        if (performerdx == 1)
+            return 0;
+        return 0;
     }
 }
