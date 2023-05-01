@@ -10,11 +10,11 @@ config_version=5
 
 [application]
 
-config/name="LD53"
+config/name="Punchline 'em all"
 run/main_scene="res://Main.tscn"
-config/features=PackedStringArray("4.0", "C#", "GL Compatibility")
+config/features=PackedStringArray("4.0", "GL Compatibility")
 boot_splash/image="res://assets/Background_SplashScreen.png"
-config/icon="res://assets/icon.svg"
+config/icon="res://assets/micro.png"
 
 [display]
 
