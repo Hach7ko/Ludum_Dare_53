@@ -1,7 +1,7 @@
 [gd_scene load_steps=47 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
-[ext_resource type="Theme" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
+[ext_resource type="Theme" uid="uid://cl3oknrlf3ptg" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
 [ext_resource type="Texture2D" uid="uid://chynpn3c2fr1j" path="res://assets/lost-places-1510592_1920.jpg" id="2_u4py5"]
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
 [ext_resource type="FontFile" uid="uid://doekgfrn2i3jt" path="res://assets/fonts/aAttackGraffiti.otf" id="3_xdvi4"]
@@ -362,6 +362,7 @@ grow_horizontal = 2
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 1, 0, 0.5)
 theme_override_fonts/font = ExtResource("3_xdvi4")
 theme_override_font_sizes/font_size = 48
 text = "Punchline 'em all"
@@ -434,6 +435,7 @@ offset_left = -127.0
 offset_top = 128.0
 offset_right = 140.0
 offset_bottom = 203.0
+theme_override_colors/font_shadow_color = Color(1, 0, 0, 0.5)
 theme_override_fonts/font = ExtResource("18_wthxg")
 theme_override_font_sizes/font_size = 72
 text = "ROULYO"
@@ -537,6 +539,7 @@ offset_left = -171.0
 offset_top = 128.0
 offset_right = 166.0
 offset_bottom = 203.0
+theme_override_colors/font_shadow_color = Color(1, 0, 0, 0.5)
 theme_override_fonts/font = ExtResource("18_wthxg")
 theme_override_font_sizes/font_size = 72
 text = "Samoussa"
