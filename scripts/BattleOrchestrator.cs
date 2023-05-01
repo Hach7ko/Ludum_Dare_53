@@ -17,7 +17,7 @@ public partial class BattleOrchestrator : Control
     [Signal]
     public delegate void UpdateScoreEventHandler(string performer1, string performer2);
     // LOGIC
-    private const int BASE_DROP_TIME_MS = 6000;
+    private const int BASE_DROP_TIME_MS = 4000;
     private const string PUNCH_MARK = "_X_";
 
     private bool _isStarted = false;
@@ -266,10 +266,8 @@ public partial class BattleOrchestrator : Control
             ++_versePlayedCount;
             Reset();
         }
-        else
-        {
-            _performers[_currentPerformerIdx].GoToNextLine();
-        }
+
+        _performers[_currentPerformerIdx].GoToNextLine();
 
         if (_performers[Config.ROULYO_PERFORMER_ID].IsTrackOver && _performers[Config.SAMOUSSA_PERFORMER_ID].IsTrackOver)
         {
