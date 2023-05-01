@@ -65,7 +65,7 @@ public partial class HUD : Control
         GetNode<Timer>("Main/Control/Middle/CountdownToStart").Start();
         GetNode<AudioStreamPlayer>("../Countdown").Play();
 
-        GetNode<Node2D>("../PerformerSelection").Hide();
+        GetNode<Control>("../PerformerSelection").Hide();
 
         GetNode<Label>("Footer/PressToStart").Hide();
         GetNode<Label>("Header/GameTitle").Hide();
