@@ -109,8 +109,8 @@ public partial class HUD : Control
     //-----------------------------------------------------------------------------
     private void DisplayWinner()
     {
-        int roulyoScore = _battleOrchestrator.GetScoreForPlayer(1).ToInt();
-        int samoussaScore = _battleOrchestrator.GetScoreForPlayer(2).ToInt();
+        int roulyoScore = _battleOrchestrator.GetScoreForPerformer(0).ToInt();
+        int samoussaScore = _battleOrchestrator.GetScoreForPerformer(1).ToInt();
 
         GD.Print("roulyo score: " + roulyoScore + " samoussa score: " + samoussaScore);
 
@@ -139,19 +139,43 @@ public partial class HUD : Control
         GetNode<Label>("Main/Left/VictoryOrDefeat").Show();
         GetNode<Label>("Main/Right/VictoryOrDefeat").Show();
     }
+
     //-----------------------------------------------------------------------------
-    private void OnUpdateScore(string performer1, string performer2)
+    private void OnUpdateScore(string roulyoScore, string samoussaScore)
     {
-        GetNode<Label>("Header/Gamepad1/Score").Text = performer1;
-        GetNode<Label>("Header/Gamepad2/Score").Text = performer2;
+        int roulyoGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Roulyo);
+        int samoussaGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Samoussa);
+
+        if (roulyoGpad != 0)
+        {
+            GetNode<Label>("Header/Gamepad" + roulyoGpad.ToString() + "/Score").Text = roulyoScore;
+            GetNode<Label>("Header/Gamepad" + GetOppositePad(roulyoGpad).ToString() + "/Score").Text = samoussaScore;
+        }
+        else if (samoussaGpad != 0)
+        {
+            GetNode<Label>("Header/Gamepad" +  GetOppositePad(samoussaGpad).ToString() + "/Score").Text = roulyoScore;
+            GetNode<Label>("Header/Gamepad" + samoussaGpad.ToString() + "/Score").Text = samoussaScore;
+        }
+
+        GetNode<Label>("Main/Left/VictoryOrDefeat").Show();
+        GetNode<Label>("Main/Right/VictoryOrDefeat").Show();
+    }
+    //-----------------------------------------------------------------------------
+    private int GetOppositePad(int padIdx)
+    {
+        if (padIdx == 1)
+            return 2;
+        if (padIdx == 2)
+            return 1;
+        return 0;
     }
     //-----------------------------------------------------------------------------
     private void OnRetryPressed()
     {
         _isGameReadyToPlay = true;
         GetNode<VBoxContainer>("Main/Middle/EndGameButton").Hide();
-        GetNode<Label>("Main/Left/Performer/VictoryOrDefeat").Hide();
-        GetNode<Label>("Main/Right/Performer/VictoryOrDefeat").Hide();
+        GetNode<Label>("Main/Left/VictoryOrDefeat").Hide();
+        GetNode<Label>("Main/Right/VictoryOrDefeat").Hide();
         _countdown = COUTDOWN;
         GetNode<Label>("Main/Middle/Countdown").Text = _countdown.ToString();
         StartGame();
