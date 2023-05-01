@@ -1,7 +1,7 @@
 [gd_scene load_steps=47 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
-[ext_resource type="Theme" uid="uid://cl3oknrlf3ptg" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
+[ext_resource type="Theme" uid="uid://t2les4oqrvbt" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
 [ext_resource type="Texture2D" uid="uid://chynpn3c2fr1j" path="res://assets/lost-places-1510592_1920.jpg" id="2_u4py5"]
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
 [ext_resource type="FontFile" uid="uid://doekgfrn2i3jt" path="res://assets/fonts/aAttackGraffiti.otf" id="3_xdvi4"]
@@ -588,9 +588,6 @@ text = "Score: 0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD/Footer"]
-layout_mode = 2
-
 [node name="PerformerSelection" type="Control" parent="."]
 z_index = 1
 layout_mode = 3
@@ -622,7 +619,6 @@ offset_bottom = 720.0
 grow_horizontal = 2
 
 [node name="Gamepad1Description" type="Label" parent="PerformerSelection/Description"]
-visible = false
 custom_minimum_size = Vector2(0, 358)
 layout_mode = 2
 size_flags_vertical = 1
@@ -631,7 +627,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Gamepad2Description" type="Label" parent="PerformerSelection/Description"]
-visible = false
 custom_minimum_size = Vector2(0, 358)
 layout_mode = 2
 theme = ExtResource("2_fixqy")
