@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvcm7kebvcriw"
-path="res://.godot/imported/idle1.png-a992329e8578a6de6e83d94fa99c6412.ctex"
+uid="uid://b6l3uchd6y6aa"
+path="res://.godot/imported/dan-gold-onuaWc_rF4M-unsplash.jpg-68e78aff2f3d4e5ae28182e53cd646dd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/samoussa/idle1.png"
-dest_files=["res://.godot/imported/idle1.png-a992329e8578a6de6e83d94fa99c6412.ctex"]
+source_file="res://assets/dan-gold-onuaWc_rF4M-unsplash.jpg"
+dest_files=["res://.godot/imported/dan-gold-onuaWc_rF4M-unsplash.jpg-68e78aff2f3d4e5ae28182e53cd646dd.ctex"]
 
 [params]
 
