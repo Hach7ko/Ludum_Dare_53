@@ -93,7 +93,7 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     private void PlayClashingAnimation(string performer)
     {
-        if (_roulyoSprite.IsPlaying() && _samoussaSprite.IsPlaying())
+        if ((_roulyoSprite.Animation == "hit" && _roulyoSprite.IsPlaying()) || (_samoussaSprite.Animation == "hit" && _samoussaSprite.IsPlaying()))
             return;
 
         switch (performer)
@@ -172,7 +172,7 @@ public partial class BattleOrchestrator : Control
     private void Start()
     {
         _roulyoSprite.Play("rap");
-        _samoussaSprite.Play("rap");
+        _samoussaSprite.Play("idle");
 
         Reset();
         ResetPerformers();
