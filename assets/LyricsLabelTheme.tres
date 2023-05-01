@@ -1,7 +1,9 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://dfssr6q3mq1d7"]
 
-[ext_resource type="FontFile" uid="uid://duyomqy4je6cl" path="res://assets/SmallTypeWriting.ttf" id="1_n2tcm"]
+[ext_resource type="FontFile" uid="uid://btkijvry6ux75" path="res://assets/SmallTypeWritingMedium.ttf" id="1_ax4qn"]
 
 [resource]
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 4
 Label/font_sizes/font_size = 24
-Label/fonts/font = ExtResource("1_n2tcm")
+Label/fonts/font = ExtResource("1_ax4qn")

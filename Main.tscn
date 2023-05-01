@@ -364,7 +364,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("3_xdvi4")
 theme_override_font_sizes/font_size = 48
-text = "Game Title"
+text = "Punchline 'em all"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -451,7 +451,7 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.431373)
+color = Color(0, 0, 0, 0.666)
 
 [node name="Middle" type="VBoxContainer" parent="HUD/Main/Control"]
 layout_mode = 1
@@ -463,9 +463,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
-
-[node name="TextureRect" type="TextureRect" parent="HUD/Main/Middle"]
-layout_mode = 2
 
 [node name="BattleOrchestrator" parent="HUD/Main/Control/Middle" instance=ExtResource("5_xlc77")]
 visible = false
@@ -584,6 +581,8 @@ theme = ExtResource("2_fixqy")
 text = "Score: 0"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="HUD@Main@Middle@TextureRect" type="TextureRect" parent="."]
 
 [node name="PerformerSelection" type="Node2D" parent="."]
 z_index = 1
