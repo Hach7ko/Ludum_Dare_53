@@ -61,11 +61,120 @@ public class TrackFactory
                             new Punch { Word = "famille", Weight = 2 },
                         }
                     },
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
                 }
             },
-            // new Verse
-            // {
-            // },
+            new Verse
+            {
+                Lines = new Line[]
+                {
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
+                }
+            },
+            new Verse
+            {
+                Lines = new Line[]
+                {
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
+                }
+            },
         };
 
         return _track1;
@@ -86,6 +195,16 @@ public class TrackFactory
                 {
                     new Line
                     {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
                         Phrase = "Ouais ouais, si si, la _X_",
                         Punches = new Punch[]
                         {
@@ -94,14 +213,120 @@ public class TrackFactory
                             new Punch { Word = "famille", Weight = 2 },
                         }
                     },
-                    // new Line
-                    // {
-                    // },
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
                 }
             },
-            // new Verse
-            // {
-            // },
+            new Verse
+            {
+                Lines = new Line[]
+                {
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
+                }
+            },
+            new Verse
+            {
+                Lines = new Line[]
+                {
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Non non, bof bof, tu _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "pues", Weight = 0 },
+                            new Punch { Word = "fouettes", Weight = 1 },
+                            new Punch { Word = "prends ton cul pour une trompette", Weight = 2 },
+                        }
+                    },
+                    new Line
+                    {
+                        Phrase = "Ouais ouais, si si, la _X_",
+                        Punches = new Punch[]
+                        {
+                            new Punch { Word = "girafe", Weight = 0 },
+                            new Punch { Word = "pizza", Weight = 1 },
+                            new Punch { Word = "famille", Weight = 2 },
+                        }
+                    },
+                }
+            },
         };
 
         return _track2;
