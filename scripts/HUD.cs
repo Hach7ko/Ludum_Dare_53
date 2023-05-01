@@ -139,6 +139,7 @@ public partial class HUD : Control
         GetNode<Label>("Main/Left/VictoryOrDefeat").Show();
         GetNode<Label>("Main/Right/VictoryOrDefeat").Show();
     }
+
     //-----------------------------------------------------------------------------
     private void OnUpdateScore(string roulyoScore, string samoussaScore)
     {
@@ -155,6 +156,18 @@ public partial class HUD : Control
             GetNode<Label>("Header/Gamepad" +  GetOppositePad(samoussaGpad).ToString() + "/Score").Text = roulyoScore;
             GetNode<Label>("Header/Gamepad" + samoussaGpad.ToString() + "/Score").Text = samoussaScore;
         }
+
+        GetNode<Label>("Main/Left/VictoryOrDefeat").Show();
+        GetNode<Label>("Main/Right/VictoryOrDefeat").Show();
+    }
+    //-----------------------------------------------------------------------------
+    private int GetOppositePad(int padIdx)
+    {
+        if (padIdx == 1)
+            return 2;
+        if (padIdx == 2)
+            return 1;
+        return 0;
     }
     //-----------------------------------------------------------------------------
     private void OnRetryPressed()
