@@ -17,8 +17,7 @@ public partial class BattleOrchestrator : Control
     [Signal]
     public delegate void UpdateScoreEventHandler(string performer1, string performer2);
     // LOGIC
-    private const int BPM = 120;
-    private const int BASE_DROP_TIME_MS = 5000;
+    private const int BASE_DROP_TIME_MS = 6000;
     private const string PUNCH_MARK = "_X_";
 
     private bool _isStarted = false;
@@ -28,7 +27,9 @@ public partial class BattleOrchestrator : Control
     private int _currentLineIdx = -1;
     private int _currentLineLength = 0;
     private int _currentPunchIdx = -1;
+    private int _versePlayedCount = -1;
     private bool _punchIsDirty = false;
+    private bool _fastDropRequested = false;
     private ulong _dropStartTimeMs = 0;
 
     // GUI
@@ -58,7 +59,7 @@ public partial class BattleOrchestrator : Control
         _samoussaSprite = GetNode<AnimatedSprite2D>("/root/MainNode/HUD/Main/Right/Performer/Samoussa/AnimatedSprite2D");
 
         Reset();
-        ResetScore();
+        ResetPerformers();
     }
 
     //-----------------------------------------------------------------------------
@@ -71,17 +72,21 @@ public partial class BattleOrchestrator : Control
         int samoussaGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Samoussa);
 
         // Gpad index 0 is CPU
-        if (_currentPerformerIdx == 0 && roulyoGpad != 0)
+        if (_currentPerformerIdx == Config.ROULYO_PERFORMER_ID && roulyoGpad != Config.CPU_CONTROLLER_ID)
         {
-            ProcessInput("left_gamepad" + roulyoGpad.ToString(), "right_gamepad" + roulyoGpad.ToString());
+            ProcessInput("left_gamepad" + roulyoGpad.ToString(),
+                         "right_gamepad" + roulyoGpad.ToString(),
+                         "drop_gamepad" + roulyoGpad.ToString());
         }
-        else if (_currentPerformerIdx == 1 && samoussaGpad != 0)
+        else if (_currentPerformerIdx == Config.SAMOUSSA_PERFORMER_ID && samoussaGpad != Config.CPU_CONTROLLER_ID)
         {
-            ProcessInput("left_gamepad" + samoussaGpad.ToString(), "right_gamepad" + samoussaGpad.ToString());
+            ProcessInput("left_gamepad" + samoussaGpad.ToString(),
+                         "right_gamepad" + samoussaGpad.ToString(),
+                         "drop_gamepad" + samoussaGpad.ToString());
         }
 
-        PlayClashingAnimation(_currentPerformerIdx == 0 ? SelectPerformer.Performers.Roulyo.ToString()
-                                                        : SelectPerformer.Performers.Samoussa.ToString());
+        PlayClashingAnimation(_currentPerformerIdx == Config.ROULYO_PERFORMER_ID ? SelectPerformer.Performers.Roulyo.ToString()
+                                                                                 : SelectPerformer.Performers.Samoussa.ToString());
 
         UpdateDropZone();
     }
@@ -104,7 +109,7 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     public string GetScoreForPerformer(uint performerIdx)
     {
-        if (performerIdx != 0 && performerIdx != 1)
+        if (performerIdx != Config.ROULYO_PERFORMER_ID && performerIdx != Config.SAMOUSSA_PERFORMER_ID)
         {
             GD.PrintErr("performerIdx should be in [0-1]");
             return null;
@@ -114,7 +119,7 @@ public partial class BattleOrchestrator : Control
     }
 
     //-----------------------------------------------------------------------------
-    private void ProcessInput(string leftEvtName, string rightEvtName)
+    private void ProcessInput(string leftEvtName, string rightEvtName, string dropEvtName)
     {
         if (Input.IsActionJustReleased(leftEvtName))
         {
@@ -128,11 +133,21 @@ public partial class BattleOrchestrator : Control
             _currentPunchIdx = StaticTools.nimod((float)_currentPunchIdx + 1.0f, _performers[_currentPerformerIdx].GetCurrentLine().Punches.Length);
             _punchIsDirty = true;
         }
+        else if (Input.IsActionJustPressed(dropEvtName))
+        {
+            _fastDropRequested = true;
+        }
+        else if (Input.IsActionJustReleased(dropEvtName))
+        {
+            _fastDropRequested = false;
+        }
     }
 
     //-----------------------------------------------------------------------------
     private void Reset()
     {
+        _fastDropRequested = false;
+
         _incomingPunchLabel.Text = "";
         _incomingPhraseLabel.Text = "";
         _verseCtrl.GetNode<Label>("0").Text = "";
@@ -141,10 +156,13 @@ public partial class BattleOrchestrator : Control
         _verseCtrl.GetNode<Label>("3").Text = "";
     }
     //-----------------------------------------------------------------------------
-    private void ResetScore()
+    private void ResetPerformers()
     {
-        _performers[0].Score = 0;
-        _performers[1].Score = 0;
+        _performers[Config.ROULYO_PERFORMER_ID].Score = 0;
+        _performers[Config.SAMOUSSA_PERFORMER_ID].Score = 0;
+
+        _performers[Config.ROULYO_PERFORMER_ID].RestartTrack();
+        _performers[Config.SAMOUSSA_PERFORMER_ID].RestartTrack();
     }
 
     //-----------------------------------------------------------------------------
@@ -154,14 +172,12 @@ public partial class BattleOrchestrator : Control
         _samoussaSprite.Play("rap");
 
         Reset();
-        ResetScore();
+        ResetPerformers();
 
         _isStarted = true;
         _currentPerformerIdx = 0;
         _currentLineIdx = 0;
-
-        _performers[0].RestartTrack();
-        _performers[1].RestartTrack();
+        _versePlayedCount = 0;
 
         SetDropZone(_performers[_currentPerformerIdx].GetCurrentLine());
 
@@ -217,15 +233,7 @@ public partial class BattleOrchestrator : Control
             _punchIsDirty = false;
         }
 
-        float dropTimeMs = BASE_DROP_TIME_MS;
-
-        int performerGpad = _playerManager.GetGamepadForPerformer(_currentPerformerIdx == 0 ? SelectPerformer.Performers.Roulyo
-                                                                                            : SelectPerformer.Performers.Samoussa);
-
-        if (performerGpad == 0)
-        {
-            dropTimeMs /= 2.0f;
-        }
+        float dropTimeMs = ComputeDropTime();
 
         ulong currentTimeMs = Time.GetTicksMsec();
         ulong elapsedTimeMs = currentTimeMs - _dropStartTimeMs;
@@ -255,6 +263,7 @@ public partial class BattleOrchestrator : Control
         if (_currentLineIdx == 0) // we looped
         {
             _currentPerformerIdx = StaticTools.nimod(_currentPerformerIdx + 1, 2);
+            ++_versePlayedCount;
             Reset();
         }
         else
@@ -262,7 +271,7 @@ public partial class BattleOrchestrator : Control
             _performers[_currentPerformerIdx].GoToNextLine();
         }
 
-        if (_performers[0].IsTrackOver && _performers[1].IsTrackOver)
+        if (_performers[Config.ROULYO_PERFORMER_ID].IsTrackOver && _performers[Config.SAMOUSSA_PERFORMER_ID].IsTrackOver)
         {
             FinalizeBattle();
         }
@@ -308,39 +317,48 @@ public partial class BattleOrchestrator : Control
     {
         switch (targetIdx)
         {
-            case 0:
+            case Config.ROULYO_PERFORMER_ID:
                 _roulyoSprite.Play("hit");
                 break;
-            case 1:
+            case Config.SAMOUSSA_PERFORMER_ID:
                 _samoussaSprite.Play("hit");
                 break;
         }
     }
     //-----------------------------------------------------------------------------
-    private string GetCurrentPerformer(int currentPerformerIdx)
+    private int GetPerformerOpponent(int performerIdx)
     {
-        if (currentPerformerIdx == 0)
+        if (performerIdx == Config.ROULYO_PERFORMER_ID)
         {
-            return _playerManager._gamepad1SelectedPerformer.ToString();
+            return Config.SAMOUSSA_PERFORMER_ID;
         }
-        else if (currentPerformerIdx == 1)
+        else if (performerIdx == Config.SAMOUSSA_PERFORMER_ID)
         {
-            return _playerManager._gamepad2SelectedPerformer.ToString();
+            return Config.ROULYO_PERFORMER_ID;
         }
         else
         {
-            GD.PrintErr("currentPerformerIdx should be in [0-1]");
-            return null;
+            return unchecked((int)0xd34dc0d3);
         }
-
     }
     //-----------------------------------------------------------------------------
-    private int GetPerformerOpponent(int performerdx)
+    private float ComputeDropTime()
     {
-        if (performerdx == 0)
-            return 1;
-        if (performerdx == 1)
-            return 0;
-        return 0;
+        int performerGpad = _playerManager.GetGamepadForPerformer(_currentPerformerIdx == 0 ? SelectPerformer.Performers.Roulyo
+                                                                                            : SelectPerformer.Performers.Samoussa);
+        float dropTimeMs = BASE_DROP_TIME_MS;
+
+        if (performerGpad == Config.CPU_CONTROLLER_ID)
+        {
+            return dropTimeMs / 2.0f;
+        }
+        else if (false) // FIX ME FAST DROP
+        {
+            return dropTimeMs / 4.0f;
+        }
+
+        int verseCountForPerformer = _versePlayedCount / 2;
+
+        return dropTimeMs * (1.0f - (0.25f * verseCountForPerformer));
     }
 }
