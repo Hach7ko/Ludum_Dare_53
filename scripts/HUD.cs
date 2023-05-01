@@ -51,6 +51,8 @@ public partial class HUD : Control
             EmitSignal(nameof(CountdownReachedZero));
             GetNode<AudioStreamPlayer>("../MainBeat").Play();
             GetNode<AudioStreamPlayer>("../IdleTheme").Stop();
+            GetNode<Label>("Footer/RoulyoScore").Show();
+            GetNode<Label>("Footer/SamoussaScore").Show();
         }
     }
     //-----------------------------------------------------------------------------
@@ -68,18 +70,11 @@ public partial class HUD : Control
         GetNode<Label>("Footer/PressToStart").Hide();
         GetNode<Label>("Header/GameTitle").Hide();
 
+        GetNode<Label>("Main/Left/Performer/RoulyoNameTag").Hide();
+        GetNode<Label>("Main/Right/Performer/SamoussaNameTag").Hide();
+
         _roulyoSprite.Play("taunt");
         _samoussaSprite.Play("taunt");
-    }
-    //-----------------------------------------------------------------------------
-    private void OnGamepad1PerformerSelected(string performer)
-    {
-        GetNode<Label>("Header/Gamepad1/Gamepad1Peformer").Text = "Player 1 : " + performer;
-    }
-
-    private void OnGamepad2PerformerSelected(string performer)
-    {
-        GetNode<Label>("Header/Gamepad2/Gamepad2Peformer").Text = "Player 2 : " + performer;
     }
     //-----------------------------------------------------------------------------
     private void OnIsGameReadyToPlay(bool isGameReadyToPlay)
@@ -112,77 +107,46 @@ public partial class HUD : Control
         int roulyoScore = _battleOrchestrator.GetScoreForPerformer(0).ToInt();
         int samoussaScore = _battleOrchestrator.GetScoreForPerformer(1).ToInt();
 
-        GD.Print("roulyo score: " + roulyoScore + " samoussa score: " + samoussaScore);
-
         if (roulyoScore == samoussaScore)
         {
             _roulyoSprite.Play("victory");
             _samoussaSprite.Play("victory");
-            GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Winner!";
-            GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Winner!";
+            GetNode<Label>("Header/VictoryOrDefeat/RoulyoVictoryOrDefeat").Text = "Winner!";
+            GetNode<Label>("Header/VictoryOrDefeat/SamoussaVictoryOrDefeat").Text = "Winner!";
         }
         else if (roulyoScore > samoussaScore)
         {
             _roulyoSprite.Play("victory");
             _samoussaSprite.Play("loss");
-            GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Winner!";
-            GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Loser!";
+            GetNode<Label>("Header/VictoryOrDefeat/RoulyoVictoryOrDefeat").Text = "Winner!";
+            GetNode<Label>("Header/VictoryOrDefeat/SamoussaVictoryOrDefeat").Text = "Loser!";
         }
         else if (roulyoScore < samoussaScore)
         {
             _roulyoSprite.Play("loss");
             _samoussaSprite.Play("victory");
-            GetNode<Label>("Main/Left/VictoryOrDefeat").Text = "Loser!";
-            GetNode<Label>("Main/Right/VictoryOrDefeat").Text = "Winner!";
+            GetNode<Label>("Header/VictoryOrDefeat/RoulyoVictoryOrDefeat").Text = "Loser!";
+            GetNode<Label>("Header/VictoryOrDefeat/SamoussaVictoryOrDefeat").Text = "Winner!";
         }
 
-        GetNode<Label>("Main/Left/VictoryOrDefeat").Show();
-        GetNode<Label>("Main/Right/VictoryOrDefeat").Show();
+        GetNode<Label>("Header/VictoryOrDefeat/RoulyoVictoryOrDefeat").Show();
+        GetNode<Label>("Header/VictoryOrDefeat/SamoussaVictoryOrDefeat").Show();
     }
 
     //-----------------------------------------------------------------------------
     private void OnUpdateScore(string roulyoScore, string samoussaScore)
     {
-        int roulyoGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Roulyo);
-        int samoussaGpad = _playerManager.GetGamepadForPerformer(SelectPerformer.Performers.Samoussa);
-
-        if (roulyoGpad != Config.CPU_CONTROLLER_ID)
-        {
-            GetNode<Label>("Header/Gamepad" + roulyoGpad.ToString() + "/Score").Text = roulyoScore;
-            GetNode<Label>("Header/Gamepad" + GetOppositePad(roulyoGpad).ToString() + "/Score").Text = samoussaScore;
-        }
-        else if (samoussaGpad != Config.CPU_CONTROLLER_ID)
-        {
-            GetNode<Label>("Header/Gamepad" +  GetOppositePad(samoussaGpad).ToString() + "/Score").Text = roulyoScore;
-            GetNode<Label>("Header/Gamepad" + samoussaGpad.ToString() + "/Score").Text = samoussaScore;
-        }
-
-        GetNode<Label>("Main/Left/VictoryOrDefeat").Show();
-        GetNode<Label>("Main/Right/VictoryOrDefeat").Show();
+        GetNode<Label>("Footer/RoulyoScore").Text = "Score: " + roulyoScore;
+        GetNode<Label>("Footer/SamoussaScore").Text = "Score: " + samoussaScore;
     }
-    //-----------------------------------------------------------------------------
-    private int GetOppositePad(int padIdx)
-    {
-        if (padIdx == Config.GPAD1_CONTROLLER_ID)
-        {
-            return Config.GPAD2_CONTROLLER_ID;
-        }
-        else if (padIdx == Config.GPAD2_CONTROLLER_ID)
-        {
-            return Config.GPAD1_CONTROLLER_ID;
-        }
-        else
-        {
-            return Config.CPU_CONTROLLER_ID;
-        }
-    }
+
     //-----------------------------------------------------------------------------
     private void OnRetryPressed()
     {
         _isGameReadyToPlay = true;
         GetNode<VBoxContainer>("Main/Middle/EndGameButton").Hide();
-        GetNode<Label>("Main/Left/VictoryOrDefeat").Hide();
-        GetNode<Label>("Main/Right/VictoryOrDefeat").Hide();
+        GetNode<Label>("Header/VictoryOrDefeat/RoulyoVictoryOrDefeat").Hide();
+        GetNode<Label>("Header/VictoryOrDefeat/SamoussaVictoryOrDefeat").Hide();
         _countdown = COUTDOWN;
         GetNode<Label>("Main/Middle/Countdown").Text = _countdown.ToString();
         StartGame();

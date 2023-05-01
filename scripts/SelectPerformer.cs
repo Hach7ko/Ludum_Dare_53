@@ -13,10 +13,6 @@ public partial class Config
 public partial class SelectPerformer : Node2D
 {
     [Signal]
-    public delegate void Gamepad1PerformerSelectedEventHandler(string performer);
-    [Signal]
-    public delegate void Gamepad2PerformerSelectedEventHandler(string performer);
-    [Signal]
     public delegate void IsGameReadyToPlayEventHandler(bool isGameReadyToPlay);
     private const int SPACE_BETWEEN_GAMEPAD = 100; //px
     public enum Performers : int
@@ -65,7 +61,7 @@ public partial class SelectPerformer : Node2D
                     }
                     else if (_gamepad2SelectedPerformer != Performers.Roulyo)
                     {
-                        OnGamepad1PerformerSelected(Performers.Roulyo, currentIndex);
+                        Gamepad1PerformerSelected(Performers.Roulyo, currentIndex);
                     }
                 }
                 else
@@ -86,7 +82,7 @@ public partial class SelectPerformer : Node2D
                     }
                     else if (_gamepad2SelectedPerformer != Performers.Samoussa)
                     {
-                        OnGamepad1PerformerSelected(Performers.Samoussa, currentIndex);
+                        Gamepad1PerformerSelected(Performers.Samoussa, currentIndex);
                     }
                 }
                 else
@@ -107,7 +103,7 @@ public partial class SelectPerformer : Node2D
                     }
                     else if (_gamepad1SelectedPerformer != Performers.Roulyo)
                     {
-                        OnGamepad2PerformerSelected(Performers.Roulyo, currentIndex);
+                        Gamepad2PerformerSelected(Performers.Roulyo, currentIndex);
                     }
                 }
                 else
@@ -127,7 +123,7 @@ public partial class SelectPerformer : Node2D
                     }
                     else if (_gamepad1SelectedPerformer != Performers.Samoussa)
                     {
-                        OnGamepad2PerformerSelected(Performers.Samoussa, currentIndex);
+                        Gamepad2PerformerSelected(Performers.Samoussa, currentIndex);
 
                     }
                 }
@@ -168,30 +164,26 @@ public partial class SelectPerformer : Node2D
         {
             _gamepad1SelectedPerformer = Performers.CPU;
             _gamepad1.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 - 100);
-            EmitSignal(nameof(Gamepad1PerformerSelected), Performers.CPU.ToString());
         }
         else if (gamepad == "gamepad2")
         {
             _gamepad2SelectedPerformer = Performers.CPU;
             _gamepad2.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 + 100);
-            EmitSignal(nameof(Gamepad2PerformerSelected), Performers.CPU.ToString());
         }
         OnIsGameReadyToPlay();
     }
     //-----------------------------------------------------------------------------
-    private void OnGamepad1PerformerSelected(Performers performer, int index)
+    private void Gamepad1PerformerSelected(Performers performer, int index)
     {
         _gamepad1SelectedPerformer = performer;
         _gamepad1.GlobalPosition = (_gamepad1Positions[index] as Marker2D).GlobalPosition;
-        EmitSignal(nameof(Gamepad1PerformerSelected), performer.ToString());
         OnIsGameReadyToPlay();
     }
     //-----------------------------------------------------------------------------
-    private void OnGamepad2PerformerSelected(Performers performer, int index)
+    private void Gamepad2PerformerSelected(Performers performer, int index)
     {
         _gamepad2SelectedPerformer = performer;
         _gamepad2.GlobalPosition = (_gamepad2Positions[index] as Marker2D).GlobalPosition;
-        EmitSignal(nameof(Gamepad2PerformerSelected), performer.ToString());
         OnIsGameReadyToPlay();
     }
     //-----------------------------------------------------------------------------

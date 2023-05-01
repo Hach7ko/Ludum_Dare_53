@@ -93,6 +93,9 @@ public partial class BattleOrchestrator : Control
     //-----------------------------------------------------------------------------
     private void PlayClashingAnimation(string performer)
     {
+        if (_roulyoSprite.IsPlaying() && _samoussaSprite.IsPlaying())
+            return;
+
         switch (performer)
         {
             case "Roulyo":
@@ -317,9 +320,12 @@ public partial class BattleOrchestrator : Control
         {
             case Config.ROULYO_PERFORMER_ID:
                 _roulyoSprite.Play("hit");
+                GetNode<AnimationPlayer>("/root/MainNode/AnimationPlayer").Play("roulyo_vibrate");
                 break;
             case Config.SAMOUSSA_PERFORMER_ID:
                 _samoussaSprite.Play("hit");
+                GetNode<AnimationPlayer>("/root/MainNode/AnimationPlayer").Play("samoussa_vibrate");
+
                 break;
         }
     }
