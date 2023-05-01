@@ -22,7 +22,7 @@ public partial class HUD : Control
         GetNode<AudioStreamPlayer>("../IdleTheme").Play();
 
         _playerManager = GetNode<SelectPerformer>("/root/MainNode/PerformerSelection");
-        _battleOrchestrator = GetNode<BattleOrchestrator>("Main/Middle/BattleOrchestrator");
+        _battleOrchestrator = GetNode<BattleOrchestrator>("Main/Control/Middle/BattleOrchestrator");
 
         _roulyoSprite = GetNode<AnimatedSprite2D>("Main/Left/Performer/Roulyo/AnimatedSprite2D");
         _roulyoSprite.Play("idle");
@@ -42,12 +42,12 @@ public partial class HUD : Control
     public void OnCountdownToStartTimeout()
     {
         --_countdown;
-        GetNode<Label>("Main/Middle/Countdown").Text = _countdown.ToString();
+        GetNode<Label>("Main/Control/Middle/Countdown").Text = _countdown.ToString();
         if (_countdown == 0)
         {
             _isGameReadyToPlay = false;
-            GetNode<Timer>("Main/Middle/CountdownToStart").Stop();
-            GetNode<Label>("Main/Middle/Countdown").Hide();
+            GetNode<Timer>("Main/Control/Middle/CountdownToStart").Stop();
+            GetNode<Label>("Main/Control/Middle/Countdown").Hide();
             EmitSignal(nameof(CountdownReachedZero));
             GetNode<AudioStreamPlayer>("../MainBeat").Play();
             GetNode<AudioStreamPlayer>("../IdleTheme").Stop();
@@ -61,8 +61,8 @@ public partial class HUD : Control
         EmitSignal(nameof(GameStarted));
         _isGameStarted = true;
 
-        GetNode<Label>("Main/Middle/Countdown").Show();
-        GetNode<Timer>("Main/Middle/CountdownToStart").Start();
+        GetNode<Label>("Main/Control/Middle/Countdown").Show();
+        GetNode<Timer>("Main/Control/Middle/CountdownToStart").Start();
         GetNode<AudioStreamPlayer>("../Countdown").Play();
 
         GetNode<Node2D>("../PerformerSelection").Hide();
@@ -95,7 +95,7 @@ public partial class HUD : Control
     {
         _isGameStarted = false;
         GetNode<Label>("Header/GameTitle").Show();
-        GetNode<VBoxContainer>("Main/Middle/EndGameButton").Show();
+        GetNode<VBoxContainer>("Main/Control/Middle/EndGameButton").Show();
         GetNode<AudioStreamPlayer>("../IdleTheme").Play();
         GetNode<AudioStreamPlayer>("../MainBeat").Stop();
         DisplayWinner();
@@ -144,11 +144,11 @@ public partial class HUD : Control
     private void OnRetryPressed()
     {
         _isGameReadyToPlay = true;
-        GetNode<VBoxContainer>("Main/Middle/EndGameButton").Hide();
+        GetNode<VBoxContainer>("Main/Control/Middle/EndGameButton").Hide();
         GetNode<Label>("Header/VictoryOrDefeat/RoulyoVictoryOrDefeat").Hide();
         GetNode<Label>("Header/VictoryOrDefeat/SamoussaVictoryOrDefeat").Hide();
         _countdown = COUTDOWN;
-        GetNode<Label>("Main/Middle/Countdown").Text = _countdown.ToString();
+        GetNode<Label>("Main/Control/Middle/Countdown").Text = _countdown.ToString();
         StartGame();
     }
     //-----------------------------------------------------------------------------

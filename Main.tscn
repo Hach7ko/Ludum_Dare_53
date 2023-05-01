@@ -359,6 +359,7 @@ offset_bottom = 116.0
 grow_horizontal = 2
 
 [node name="GameTitle" type="Label" parent="HUD/Header"]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("3_xdvi4")
@@ -408,6 +409,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
 
 [node name="Performer" type="Control" parent="HUD/Main/Left"]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
@@ -436,20 +438,41 @@ theme_override_fonts/font = ExtResource("18_wthxg")
 theme_override_font_sizes/font_size = 72
 text = "ROULYO"
 
-[node name="Middle" type="VBoxContainer" parent="HUD/Main"]
-custom_minimum_size = Vector2(72, 0)
+[node name="Control" type="Control" parent="HUD/Main"]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="ColorRect" parent="HUD/Main/Control"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.431373)
+
+[node name="Middle" type="VBoxContainer" parent="HUD/Main/Control"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
 [node name="TextureRect" type="TextureRect" parent="HUD/Main/Middle"]
 layout_mode = 2
 
-[node name="BattleOrchestrator" parent="HUD/Main/Middle" instance=ExtResource("5_xlc77")]
+[node name="BattleOrchestrator" parent="HUD/Main/Control/Middle" instance=ExtResource("5_xlc77")]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Countdown" type="Label" parent="HUD/Main/Middle"]
+[node name="Countdown" type="Label" parent="HUD/Main/Control/Middle"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -458,32 +481,32 @@ theme = ExtResource("2_fixqy")
 theme_override_font_sizes/font_size = 72
 text = "3"
 
-[node name="CountdownToStart" type="Timer" parent="HUD/Main/Middle"]
+[node name="CountdownToStart" type="Timer" parent="HUD/Main/Control/Middle"]
 
-[node name="P1Unselected" type="Marker2D" parent="HUD/Main/Middle" groups=["Gamepad1Position"]]
+[node name="P1Unselected" type="Marker2D" parent="HUD/Main/Control/Middle" groups=["Gamepad1Position"]]
 
-[node name="P2Unselected" type="Marker2D" parent="HUD/Main/Middle" groups=["Gamepad2Position"]]
+[node name="P2Unselected" type="Marker2D" parent="HUD/Main/Control/Middle" groups=["Gamepad2Position"]]
 
-[node name="EndGameButton" type="VBoxContainer" parent="HUD/Main/Middle"]
+[node name="EndGameButton" type="VBoxContainer" parent="HUD/Main/Control/Middle"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 theme = ExtResource("2_fixqy")
 
-[node name="Retry" type="Button" parent="HUD/Main/Middle/EndGameButton"]
+[node name="Retry" type="Button" parent="HUD/Main/Control/Middle/EndGameButton"]
 layout_mode = 2
 size_flags_vertical = 6
 theme = ExtResource("2_fixqy")
 text = "Retry"
 
-[node name="Select a new performer" type="Button" parent="HUD/Main/Middle/EndGameButton"]
+[node name="Select a new performer" type="Button" parent="HUD/Main/Control/Middle/EndGameButton"]
 layout_mode = 2
 size_flags_vertical = 6
 theme = ExtResource("2_fixqy")
 text = "Select Performer"
 
-[node name="Quit" type="Button" parent="HUD/Main/Middle/EndGameButton"]
+[node name="Quit" type="Button" parent="HUD/Main/Control/Middle/EndGameButton"]
 layout_mode = 2
 size_flags_vertical = 6
 theme = ExtResource("2_fixqy")
@@ -563,6 +586,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="PerformerSelection" type="Node2D" parent="."]
+z_index = 1
 script = ExtResource("3_g410e")
 
 [node name="Gamepad1" type="Sprite2D" parent="PerformerSelection"]
@@ -590,12 +614,12 @@ stream = ExtResource("7_qkvhb")
 [node name="MainBeat" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_3j7yh")
 
-[connection signal="CountdownReachedZero" from="HUD" to="HUD/Main/Middle/BattleOrchestrator" method="OnCountdownReachedZero"]
+[connection signal="CountdownReachedZero" from="HUD" to="HUD/Main/Control/Middle/BattleOrchestrator" method="OnCountdownReachedZero"]
 [connection signal="GameStarted" from="HUD" to="PerformerSelection" method="OnGameStarted"]
-[connection signal="BattleEnded" from="HUD/Main/Middle/BattleOrchestrator" to="HUD" method="OnBattleEnded"]
-[connection signal="UpdateScore" from="HUD/Main/Middle/BattleOrchestrator" to="HUD" method="OnUpdateScore"]
-[connection signal="timeout" from="HUD/Main/Middle/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
-[connection signal="pressed" from="HUD/Main/Middle/EndGameButton/Retry" to="HUD" method="OnRetryPressed"]
-[connection signal="pressed" from="HUD/Main/Middle/EndGameButton/Select a new performer" to="HUD" method="OnSelectPerformerPressed"]
-[connection signal="pressed" from="HUD/Main/Middle/EndGameButton/Quit" to="HUD" method="OnQuitPressed"]
+[connection signal="BattleEnded" from="HUD/Main/Control/Middle/BattleOrchestrator" to="HUD" method="OnBattleEnded"]
+[connection signal="UpdateScore" from="HUD/Main/Control/Middle/BattleOrchestrator" to="HUD" method="OnUpdateScore"]
+[connection signal="timeout" from="HUD/Main/Control/Middle/CountdownToStart" to="HUD" method="OnCountdownToStartTimeout"]
+[connection signal="pressed" from="HUD/Main/Control/Middle/EndGameButton/Retry" to="HUD" method="OnRetryPressed"]
+[connection signal="pressed" from="HUD/Main/Control/Middle/EndGameButton/Select a new performer" to="HUD" method="OnSelectPerformerPressed"]
+[connection signal="pressed" from="HUD/Main/Control/Middle/EndGameButton/Quit" to="HUD" method="OnQuitPressed"]
 [connection signal="IsGameReadyToPlay" from="PerformerSelection" to="HUD" method="OnIsGameReadyToPlay"]
