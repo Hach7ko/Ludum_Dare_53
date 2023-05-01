@@ -165,14 +165,12 @@ public partial class SelectPerformer : Control
         if (gamepad == "gamepad1")
         {
             GetNode<Label>("Description/Gamepad1Description").Text = "";
-            GetNode<Label>("Description/Gamepad1Description").Hide();
             _gamepad1SelectedPerformer = Performers.CPU;
             _gamepad1.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 - 100);
         }
         else if (gamepad == "gamepad2")
         {
             GetNode<Label>("Description/Gamepad2Description").Text = "";
-            GetNode<Label>("Description/Gamepad2Description").Hide();
             _gamepad2SelectedPerformer = Performers.CPU;
             _gamepad2.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 + 100);
         }
@@ -181,9 +179,7 @@ public partial class SelectPerformer : Control
     //-----------------------------------------------------------------------------
     private void Gamepad1PerformerSelected(Performers performer, int index)
     {
-
         GetNode<Label>("Description/Gamepad1Description").Text = performer == Performers.Roulyo ? Config.ROULYO_DESCRIPTION : Config.SAMOUSSA_DESCRIPTION;
-        GetNode<Label>("Description/Gamepad1Description").Show();
         _gamepad1SelectedPerformer = performer;
         _gamepad1.GlobalPosition = (_gamepad1Positions[index] as Marker2D).GlobalPosition;
         OnIsGameReadyToPlay();
@@ -192,7 +188,6 @@ public partial class SelectPerformer : Control
     private void Gamepad2PerformerSelected(Performers performer, int index)
     {
         GetNode<Label>("Description/Gamepad2Description").Text = performer == Performers.Roulyo ? Config.ROULYO_DESCRIPTION : Config.SAMOUSSA_DESCRIPTION;
-        GetNode<Label>("Description/Gamepad2Description").Show();
         _gamepad2SelectedPerformer = performer;
         _gamepad2.GlobalPosition = (_gamepad2Positions[index] as Marker2D).GlobalPosition;
         OnIsGameReadyToPlay();
@@ -207,7 +202,7 @@ public partial class SelectPerformer : Control
     private void OnGameStarted()
     {
         _isGameStarted = true;
-        GetNode<Label>("Description/Gamepad1Description").Hide();
-        GetNode<Label>("Description/Gamepad2Description").Hide();
+        GetNode<Label>("Description/Gamepad1Description").Text = "";
+        GetNode<Label>("Description/Gamepad2Description").Text = "";
     }
 }
