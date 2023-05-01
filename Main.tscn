@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
 [ext_resource type="Theme" uid="uid://t2les4oqrvbt" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
-[ext_resource type="Texture2D" path="res://assets/dan-gold-onuaWc_rF4M-unsplash.jpg" id="2_kaxcd"]
+[ext_resource type="Texture2D" uid="uid://b6l3uchd6y6aa" path="res://assets/dan-gold-onuaWc_rF4M-unsplash.jpg" id="2_kaxcd"]
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
 [ext_resource type="FontFile" uid="uid://doekgfrn2i3jt" path="res://assets/fonts/aAttackGraffiti.otf" id="3_xdvi4"]
 [ext_resource type="Texture2D" uid="uid://dfwn34qn6ywly" path="res://assets/roulyo/rap1.png" id="5_8t3vp"]
@@ -274,6 +274,21 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_jv46p"]
+resource_name = "samoussa_vibrate"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HUD/Main/Right/Performer/Samoussa/AnimatedSprite2D:offset")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_gc5e4"]
 resource_name = "shake_gamepad1"
 tracks/0/type = "value"
@@ -302,21 +317,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_jv46p"]
-resource_name = "samoussa_vibrate"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HUD/Main/Right/Performer/Samoussa/AnimatedSprite2D:offset")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c534j"]
