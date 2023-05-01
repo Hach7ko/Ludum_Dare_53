@@ -351,17 +351,46 @@ grow_vertical = 2
 texture = ExtResource("2_kaxcd")
 expand_mode = 5
 
-[node name="GameTitle" type="Label" parent="HUD"]
+[node name="Header" type="VBoxContainer" parent="HUD"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 10.0
-offset_bottom = 62.0
+offset_bottom = 116.0
 grow_horizontal = 2
+
+[node name="GameTitle" type="Label" parent="HUD/Header"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("3_xdvi4")
 theme_override_font_sizes/font_size = 48
 text = "Game Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VictoryOrDefeat" type="HBoxContainer" parent="HUD/Header"]
+layout_mode = 2
+
+[node name="RoulyoVictoryOrDefeat" type="Label" parent="HUD/Header/VictoryOrDefeat"]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme = ExtResource("2_fixqy")
+text = "VICTORY OR DEFEAT?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SamoussaVictoryOrDefeat" type="Label" parent="HUD/Header/VictoryOrDefeat"]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme = ExtResource("2_fixqy")
+text = "VICTORY OR DEFEAT?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -528,36 +557,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_fixqy")
 text = "Score: 0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RoulyoVictoryOrDefeat" type="Label" parent="HUD"]
-visible = false
-custom_minimum_size = Vector2(0, 60)
-layout_mode = 2
-offset_left = 141.0
-offset_top = 83.0
-offset_right = 424.0
-offset_bottom = 143.0
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme = ExtResource("2_fixqy")
-text = "VICTORY OR DEFEAT?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SamoussaVictoryOrDefeat" type="Label" parent="HUD"]
-visible = false
-custom_minimum_size = Vector2(0, 60)
-layout_mode = 2
-offset_left = 713.0
-offset_top = 83.0
-offset_right = 996.0
-offset_bottom = 143.0
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme = ExtResource("2_fixqy")
-text = "VICTORY OR DEFEAT?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
