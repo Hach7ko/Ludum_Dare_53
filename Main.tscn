@@ -536,7 +536,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_fixqy")
 text = "Score: 0"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PressToStart" type="Label" parent="HUD/Footer"]
@@ -557,7 +556,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_fixqy")
 text = "Score: 0"
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="PerformerSelection" type="Node2D" parent="."]
