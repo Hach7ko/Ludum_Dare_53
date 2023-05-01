@@ -263,6 +263,8 @@ public partial class BattleOrchestrator : Control
         _verseCtrl.GetNode<Label>(_currentLineIdx.ToString()).Text = lineStr;
         _currentLineIdx = StaticTools.nimod(_currentLineIdx + 1, 4);
 
+        _performers[_currentPerformerIdx].GoToNextLine();
+
         if (_currentLineIdx == 0) // we looped
         {
             _currentPerformerIdx = StaticTools.nimod(_currentPerformerIdx + 1, 2);
@@ -270,7 +272,6 @@ public partial class BattleOrchestrator : Control
             Reset();
         }
 
-        _performers[_currentPerformerIdx].GoToNextLine();
 
         if (_performers[Config.ROULYO_PERFORMER_ID].IsTrackOver && _performers[Config.SAMOUSSA_PERFORMER_ID].IsTrackOver)
         {
