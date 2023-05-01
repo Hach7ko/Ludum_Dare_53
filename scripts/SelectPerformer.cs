@@ -8,9 +8,11 @@ public partial class Config
     public const int CPU_CONTROLLER_ID = 0;
     public const int GPAD1_CONTROLLER_ID = 1;
     public const int GPAD2_CONTROLLER_ID = 2;
+    public const string ROULYO_DESCRIPTION = "Straight from the suburbs, \n Roulyo chose the thug life, \n but the thug life did not chose him";
+    public const string SAMOUSSA_DESCRIPTION = "Maybe they're born with it, \n maybe it's the onesie.";
 }
 
-public partial class SelectPerformer : Node2D
+public partial class SelectPerformer : Control
 {
     [Signal]
     public delegate void IsGameReadyToPlayEventHandler(bool isGameReadyToPlay);
@@ -162,11 +164,15 @@ public partial class SelectPerformer : Node2D
     {
         if (gamepad == "gamepad1")
         {
+            GetNode<Label>("Description/Gamepad1Description").Text = "";
+            GetNode<Label>("Description/Gamepad1Description").Hide();
             _gamepad1SelectedPerformer = Performers.CPU;
             _gamepad1.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 - 100);
         }
         else if (gamepad == "gamepad2")
         {
+            GetNode<Label>("Description/Gamepad2Description").Text = "";
+            GetNode<Label>("Description/Gamepad2Description").Hide();
             _gamepad2SelectedPerformer = Performers.CPU;
             _gamepad2.GlobalPosition = new Vector2(GetViewportRect().Size.X / 2, GetViewportRect().Size.Y / 2 + 100);
         }
@@ -175,6 +181,9 @@ public partial class SelectPerformer : Node2D
     //-----------------------------------------------------------------------------
     private void Gamepad1PerformerSelected(Performers performer, int index)
     {
+
+        GetNode<Label>("Description/Gamepad1Description").Text = performer == Performers.Roulyo ? Config.ROULYO_DESCRIPTION : Config.SAMOUSSA_DESCRIPTION;
+        GetNode<Label>("Description/Gamepad1Description").Show();
         _gamepad1SelectedPerformer = performer;
         _gamepad1.GlobalPosition = (_gamepad1Positions[index] as Marker2D).GlobalPosition;
         OnIsGameReadyToPlay();
@@ -182,6 +191,8 @@ public partial class SelectPerformer : Node2D
     //-----------------------------------------------------------------------------
     private void Gamepad2PerformerSelected(Performers performer, int index)
     {
+        GetNode<Label>("Description/Gamepad2Description").Text = performer == Performers.Roulyo ? Config.ROULYO_DESCRIPTION : Config.SAMOUSSA_DESCRIPTION;
+        GetNode<Label>("Description/Gamepad2Description").Show();
         _gamepad2SelectedPerformer = performer;
         _gamepad2.GlobalPosition = (_gamepad2Positions[index] as Marker2D).GlobalPosition;
         OnIsGameReadyToPlay();
@@ -196,5 +207,7 @@ public partial class SelectPerformer : Node2D
     private void OnGameStarted()
     {
         _isGameStarted = true;
+        GetNode<Label>("Description/Gamepad1Description").Hide();
+        GetNode<Label>("Description/Gamepad2Description").Hide();
     }
 }
