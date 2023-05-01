@@ -1,40 +1,40 @@
 [gd_scene load_steps=47 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
-[ext_resource type="Theme" uid="uid://t2les4oqrvbt" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
-[ext_resource type="Texture2D" uid="uid://b6l3uchd6y6aa" path="res://assets/dan-gold-onuaWc_rF4M-unsplash.jpg" id="2_kaxcd"]
+[ext_resource type="Theme" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
+[ext_resource type="Texture2D" uid="uid://chynpn3c2fr1j" path="res://assets/lost-places-1510592_1920.jpg" id="2_u4py5"]
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
 [ext_resource type="FontFile" uid="uid://doekgfrn2i3jt" path="res://assets/fonts/aAttackGraffiti.otf" id="3_xdvi4"]
 [ext_resource type="Texture2D" uid="uid://dfwn34qn6ywly" path="res://assets/roulyo/rap1.png" id="5_8t3vp"]
-[ext_resource type="Texture2D" uid="uid://da18vghy6jdxk" path="res://assets/roulyo/hit.png" id="5_qkgc0"]
+[ext_resource type="Texture2D" uid="uid://gmqc6xb0uyol" path="res://assets/roulyo/hit.png" id="5_qkgc0"]
 [ext_resource type="PackedScene" uid="uid://dplc7nu0uhmil" path="res://BattleOrchestrator.tscn" id="5_xlc77"]
 [ext_resource type="AudioStream" uid="uid://b06woaien0e7b" path="res://assets/sounds/ld53beat.ogg" id="6_3j7yh"]
 [ext_resource type="AudioStream" uid="uid://dkx41bwwvkeu0" path="res://assets/sounds/idletheme.ogg" id="6_62g4y"]
 [ext_resource type="Texture2D" uid="uid://ersf4lv00bai" path="res://assets/roulyo/rap2.png" id="6_p7eim"]
-[ext_resource type="Texture2D" uid="uid://b87sny87q14xm" path="res://assets/roulyo/hit_alt.png" id="6_sn80y"]
-[ext_resource type="Texture2D" uid="uid://cnsj35xociinx" path="res://assets/roulyo/idle1.png" id="6_xx4l5"]
-[ext_resource type="Texture2D" uid="uid://bh4taonfp8iqq" path="res://assets/roulyo/idle2.png" id="7_asjqi"]
+[ext_resource type="Texture2D" uid="uid://bjdneui8yf6ph" path="res://assets/roulyo/hit_alt.png" id="6_sn80y"]
+[ext_resource type="Texture2D" uid="uid://dhlpya1ej2ml4" path="res://assets/roulyo/idle1.png" id="6_xx4l5"]
+[ext_resource type="Texture2D" uid="uid://btrj6wt0uu5il" path="res://assets/roulyo/idle2.png" id="7_asjqi"]
 [ext_resource type="AudioStream" uid="uid://bmvcaj4mvsg8i" path="res://assets/sounds/countdownhorn.ogg" id="7_qkvhb"]
 [ext_resource type="Texture2D" uid="uid://cvcm7kebvcriw" path="res://assets/samoussa/idle1.png" id="8_exyr8"]
-[ext_resource type="Texture2D" uid="uid://ic4vgsyevedm" path="res://assets/roulyo/lose.png" id="8_m5hmf"]
+[ext_resource type="Texture2D" uid="uid://wc7g7juv4vi2" path="res://assets/roulyo/lose.png" id="8_m5hmf"]
 [ext_resource type="Texture2D" uid="uid://bkjwt1uh17h7" path="res://assets/samoussa/idle2.png" id="9_16asc"]
-[ext_resource type="Texture2D" uid="uid://b78vplsoex23n" path="res://assets/roulyo/lose_alt.png" id="10_cjr4x"]
+[ext_resource type="Texture2D" uid="uid://d4l5nyc2w21rn" path="res://assets/roulyo/lose_alt.png" id="10_cjr4x"]
 [ext_resource type="Texture2D" uid="uid://bqxa71l8t58of" path="res://assets/micro.png" id="11_0goy0"]
-[ext_resource type="Texture2D" uid="uid://ds5yoa7g2e7qx" path="res://assets/roulyo/taunt1.png" id="11_c5tw4"]
-[ext_resource type="Texture2D" uid="uid://biiv2033a6tpv" path="res://assets/roulyo/taunt2.png" id="12_a2381"]
-[ext_resource type="Texture2D" uid="uid://4c6dp0bjtmbk" path="res://assets/roulyo/win1.png" id="13_kitep"]
-[ext_resource type="Texture2D" uid="uid://dxxiv8y4bqej8" path="res://assets/roulyo/win2.png" id="14_cd1gw"]
-[ext_resource type="Texture2D" uid="uid://fh23e6jhcuf2" path="res://assets/samoussa/hit.png" id="16_t70g1"]
+[ext_resource type="Texture2D" uid="uid://cn0frl7wwwl62" path="res://assets/roulyo/taunt1.png" id="11_c5tw4"]
+[ext_resource type="Texture2D" uid="uid://cnd1bov23bc4q" path="res://assets/roulyo/taunt2.png" id="12_a2381"]
+[ext_resource type="Texture2D" uid="uid://c5fh6qik54ior" path="res://assets/roulyo/win1.png" id="13_kitep"]
+[ext_resource type="Texture2D" uid="uid://b7fxxhjm5sgrp" path="res://assets/roulyo/win2.png" id="14_cd1gw"]
+[ext_resource type="Texture2D" uid="uid://c2jp08t0tkqx7" path="res://assets/samoussa/hit.png" id="16_t70g1"]
 [ext_resource type="FontFile" uid="uid://bcbkcjf4x8ki3" path="res://assets/fonts/Hidebeast Blocky Demo Regular.ttf" id="18_wthxg"]
-[ext_resource type="Texture2D" uid="uid://dt5hufr848lm1" path="res://assets/samoussa/lose.png" id="19_fbhqd"]
-[ext_resource type="Texture2D" uid="uid://c7dwokp02o1d7" path="res://assets/samoussa/hit_alt.png" id="19_thxw2"]
-[ext_resource type="Texture2D" uid="uid://bpnocj20djakm" path="res://assets/samoussa/rap1.png" id="20_rr3kk"]
-[ext_resource type="Texture2D" uid="uid://ciroc7y16xg8e" path="res://assets/samoussa/rap2.png" id="21_3kejr"]
-[ext_resource type="Texture2D" uid="uid://dc13xqf4d3tan" path="res://assets/samoussa/taunt1.png" id="22_5mot3"]
-[ext_resource type="Texture2D" uid="uid://b78ltvdm5qb8d" path="res://assets/samoussa/taunt2.png" id="23_cihvq"]
-[ext_resource type="Texture2D" uid="uid://ytjtjdpipi8t" path="res://assets/samoussa/lose_alt.png" id="23_olx70"]
-[ext_resource type="Texture2D" uid="uid://c3oqhb76uarue" path="res://assets/samoussa/win1.png" id="24_hb1ik"]
-[ext_resource type="Texture2D" uid="uid://c0v6yfo33wbac" path="res://assets/samoussa/win2.png" id="25_xipql"]
+[ext_resource type="Texture2D" uid="uid://ntav6kt4b4ni" path="res://assets/samoussa/lose.png" id="19_fbhqd"]
+[ext_resource type="Texture2D" uid="uid://dxtpc8na16sdu" path="res://assets/samoussa/hit_alt.png" id="19_thxw2"]
+[ext_resource type="Texture2D" uid="uid://cg64vudei3i2" path="res://assets/samoussa/rap1.png" id="20_rr3kk"]
+[ext_resource type="Texture2D" uid="uid://bhe487cdk6uis" path="res://assets/samoussa/rap2.png" id="21_3kejr"]
+[ext_resource type="Texture2D" uid="uid://c4mlkuau7u045" path="res://assets/samoussa/taunt1.png" id="22_5mot3"]
+[ext_resource type="Texture2D" uid="uid://cmbcrg2slttny" path="res://assets/samoussa/taunt2.png" id="23_cihvq"]
+[ext_resource type="Texture2D" uid="uid://bj2jemq1sx2qo" path="res://assets/samoussa/lose_alt.png" id="23_olx70"]
+[ext_resource type="Texture2D" uid="uid://b73ln1f734ndk" path="res://assets/samoussa/win1.png" id="24_hb1ik"]
+[ext_resource type="Texture2D" uid="uid://bfyvbigan1ju5" path="res://assets/samoussa/win2.png" id="25_xipql"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ytaqa"]
 animations = [{
@@ -341,14 +341,14 @@ grow_vertical = 2
 size_flags_vertical = 4
 script = ExtResource("1_w64m3")
 
-[node name="TextureRect" type="TextureRect" parent="HUD"]
+[node name="Background" type="TextureRect" parent="HUD"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_kaxcd")
+texture = ExtResource("2_u4py5")
 expand_mode = 5
 
 [node name="Header" type="VBoxContainer" parent="HUD"]
@@ -440,6 +440,9 @@ text = "ROULYO"
 custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Main/Middle"]
+layout_mode = 2
 
 [node name="BattleOrchestrator" parent="HUD/Main/Middle" instance=ExtResource("5_xlc77")]
 visible = false
