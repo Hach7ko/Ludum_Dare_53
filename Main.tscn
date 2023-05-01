@@ -1,22 +1,22 @@
-[gd_scene load_steps=43 format=3 uid="uid://bbr1jut0flnjc"]
+[gd_scene load_steps=45 format=3 uid="uid://bbr1jut0flnjc"]
 
 [ext_resource type="Script" path="res://scripts/HUD.cs" id="1_w64m3"]
 [ext_resource type="Theme" uid="uid://t2les4oqrvbt" path="res://assets/HUDLabelTheme.tres" id="2_fixqy"]
 [ext_resource type="Script" path="res://scripts/SelectPerformer.cs" id="3_g410e"]
 [ext_resource type="FontFile" uid="uid://doekgfrn2i3jt" path="res://assets/fonts/aAttackGraffiti.otf" id="3_xdvi4"]
-[ext_resource type="Texture2D" uid="uid://dqme225ymaoae" path="res://assets/roulyo/rap1.png" id="5_8t3vp"]
+[ext_resource type="Texture2D" uid="uid://dfwn34qn6ywly" path="res://assets/roulyo/rap1.png" id="5_8t3vp"]
 [ext_resource type="Texture2D" uid="uid://da18vghy6jdxk" path="res://assets/roulyo/hit.png" id="5_qkgc0"]
 [ext_resource type="PackedScene" uid="uid://dplc7nu0uhmil" path="res://BattleOrchestrator.tscn" id="5_xlc77"]
 [ext_resource type="AudioStream" uid="uid://b06woaien0e7b" path="res://assets/sounds/ld53beat.ogg" id="6_3j7yh"]
 [ext_resource type="AudioStream" uid="uid://dkx41bwwvkeu0" path="res://assets/sounds/idletheme.ogg" id="6_62g4y"]
-[ext_resource type="Texture2D" uid="uid://cqjpepoj2uim7" path="res://assets/roulyo/rap2.png" id="6_p7eim"]
+[ext_resource type="Texture2D" uid="uid://ersf4lv00bai" path="res://assets/roulyo/rap2.png" id="6_p7eim"]
 [ext_resource type="Texture2D" uid="uid://b87sny87q14xm" path="res://assets/roulyo/hit_alt.png" id="6_sn80y"]
 [ext_resource type="Texture2D" uid="uid://cnsj35xociinx" path="res://assets/roulyo/idle1.png" id="6_xx4l5"]
 [ext_resource type="Texture2D" uid="uid://bh4taonfp8iqq" path="res://assets/roulyo/idle2.png" id="7_asjqi"]
 [ext_resource type="AudioStream" uid="uid://bmvcaj4mvsg8i" path="res://assets/sounds/countdownhorn.ogg" id="7_qkvhb"]
-[ext_resource type="Texture2D" uid="uid://dt7bj4cerp5as" path="res://assets/samoussa/idle1.png" id="8_exyr8"]
+[ext_resource type="Texture2D" uid="uid://cvcm7kebvcriw" path="res://assets/samoussa/idle1.png" id="8_exyr8"]
 [ext_resource type="Texture2D" uid="uid://ic4vgsyevedm" path="res://assets/roulyo/lose.png" id="8_m5hmf"]
-[ext_resource type="Texture2D" uid="uid://dxqvo4wvcb1u3" path="res://assets/samoussa/idle2.png" id="9_16asc"]
+[ext_resource type="Texture2D" uid="uid://bkjwt1uh17h7" path="res://assets/samoussa/idle2.png" id="9_16asc"]
 [ext_resource type="Texture2D" uid="uid://b78vplsoex23n" path="res://assets/roulyo/lose_alt.png" id="10_cjr4x"]
 [ext_resource type="Texture2D" uid="uid://bqxa71l8t58of" path="res://assets/micro.png" id="11_0goy0"]
 [ext_resource type="Texture2D" uid="uid://ds5yoa7g2e7qx" path="res://assets/roulyo/taunt1.png" id="11_c5tw4"]
@@ -216,6 +216,30 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HUD/Main/Left/Performer/Roulyo/AnimatedSprite2D:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HUD/Main/Right/Performer/Samoussa/AnimatedSprite2D:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_b7ajb"]
 resource_name = "press_start_blinking"
@@ -263,10 +287,42 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(-50, 0), Vector2(50, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_h04ea"]
+resource_name = "roulyo_vibrate"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HUD/Main/Left/Performer/Roulyo/AnimatedSprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jv46p"]
+resource_name = "samya_vibrate"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HUD/Main/Right/Performer/Samoussa/AnimatedSprite2D:offset")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(-60, 0), Vector2(60, 0), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c534j"]
 _data = {
 "RESET": SubResource("Animation_82ua5"),
 "press_start_blinking": SubResource("Animation_b7ajb"),
+"roulyo_vibrate": SubResource("Animation_h04ea"),
+"samya_vibrate": SubResource("Animation_jv46p"),
 "shake_gamepad1": SubResource("Animation_gc5e4"),
 "shake_gamepad2": SubResource("Animation_3pv38")
 }
@@ -392,8 +448,7 @@ size_flags_vertical = 6
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD/Main/Left/Performer/Roulyo"]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ytaqa")
-animation = &"loss"
-frame_progress = 0.172413
+animation = &"hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HUD/Main/Left/Performer/Roulyo"]
 shape = SubResource("RectangleShape2D_2glp4")
